@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Persian Date Picker (Supports Solar Hijri) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/css/persian-datepicker.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/js/persian-datepicker.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinyl Flooring Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1 >Vinyl Flooring Rolls Records Website</h1>
+
+    <div class="header-container">
+        <h1></h1>
+        <div class="button-container">
+            <button onclick="window.location.href='pages/soldRecords.html'">📜 View Sold Records</button>
+            <button onclick="openAddVinylModal()">➕ Add New Vinyl</button>
+            <button onclick="fetchVinylRolls()">🔄 Refresh List</button>
+        </div>
+
+    </div>
+    
+
+    <!-- Edit Vinyl Modal -->
+<div id="editVinylModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditVinylModal()">&times;</span>
+        <h2>Edit Vinyl Roll</h2>
+        
+        <label>Vinyl Name:</label>
+        <input type="text" id="editVinylName" required>
+
+        <label>Type:</label>
+        <input type="text" id="editVinylType" required>
+
+        <label>Color:</label>
+        <input type="text" id="editVinylColor" required>
+
+        <label>Length (meters):</label>
+        <input type="number" id="editVinylLength" required>
+
+        <label>Width (meters):</label>
+        <input type="number" id="editVinylWidth" required>
+
+        <label>Entry Date:</label>
+        <input type="date" id="editVinylEntryDate">
+
+        <button onclick="updateVinyl()">✅ Update Vinyl</button>
+    </div>
+</div>
+
+       
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
+            <h2>Are you sure?</h2>
+            <p>Do you really want to delete this vinyl roll? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button id="confirmDeleteBtn" class="danger">Yes, Delete</button>
+                <button onclick="closeDeleteModal()" class="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search by Type, Color, etc." autofocus>
+        <!-- <button onclick="filterVinyls()">Search</button> -->
+    </div>
+    
+    <!-- Vinyl Rolls Table -->
+    <div class="tb">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>  <!-- Roll Number Column -->
+                    <th>Name</th> <!-- ✅ NEW COLUMN -->
+                    <th>Type</th>
+                    <th>Color</th>
+                    <th>Length</th>
+                    <th>Width</th>
+                    <th>Entry Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="vinylTable">
+                <!-- Vinyl rolls will be loaded here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Sell Vinyl Modal -->
+    <div id="sellVinylModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSellVinylModal()">&times;</span>
+            <h2>Mark Vinyl as Sold</h2>
+            <label>Customer Name:</label>
+            <input type="text" id="customerName" required>
+
+            <label>Date Sold:</label>
+            <input type="date" id="soldDate">
+
+            <button onclick="sellVinyl()">✅ Confirm Sale</button>
+        </div>
+    </div>
+
+    <!-- Add New Vinyl Modal -->
+    <div id="addVinylModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddVinylModal()">&times;</span>
+            <h2>Add New Vinyl Roll</h2>
+            <label>Name:</label>
+            <input type="text" id="vinylName" required>
+            <label>Type:</label>
+            <input type="text" id="vinylType" required>
+            
+            <label>Color:</label>
+            <input type="text" id="vinylColor" required>
+
+            <label>Length (meters):</label>
+            <input type="number" id="vinylLength" required>
+
+            <label>Width (meters):</label>
+            <input type="number" id="vinylWidth" required>
+
+            <label>Entry Date:</label>
+            <input type="text" id="vinylEntryDate" autocomplete="off" required>
+
+
+            <label>Details:</label>
+            <textarea id="vinylDetails"></textarea>
+
+            <button onclick="addVinyl()">✅ Add Vinyl</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; <span id="year"></span> Vinyl Flooring Records Website. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Load Scripts -->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

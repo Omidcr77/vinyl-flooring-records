@@ -1,0 +1,375 @@
+
+
+/* General Styling */
+body {
+    background-image: url('../bg.png'); /* Change to correct file path */
+    background-size: cover; /* Covers the full screen */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    background-attachment: fixed; /* Keeps it fixed when scrolling */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 60px;  /* Adjust based on footer height */
+}
+
+h1 {
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+/* Buttons */
+button {
+    display: inline-block;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #0056b3, #003d80);
+    transform: scale(1.05);
+}
+
+
+/* Table Styling */
+table {
+    width: 80%;
+    position: relative;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    overflow: visible; /* Allow dropdowns to be seen */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 14px;
+    text-align: center;
+}
+
+th {
+    background: #007BFF;
+    color: white;
+    text-transform: uppercase;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+/* Center Modal Properly */
+.modal-content {
+    background-color: #fff;
+    width: 40%;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Smooth Modal Animation */
+.modal.show .modal-content {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+/* Close Button */
+.close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #c9302c;
+}
+
+/* Fix Form Inputs Spacing */
+.modal-content input, .modal-content textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.modal-content label {
+    font-size: large;
+    font-weight: bold;
+}
+
+/* Adjust Modal Button Alignment */
+.modal-content button {
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+/* Delete Confirmation Modal */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.modal-buttons button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* Sell Modal */
+#sellVinylModal .modal-content {
+    width: 35%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+    }
+
+    table {
+        width: 95%;
+    }
+}
+
+/* Footer Styling - Keep it at the bottom without overlapping content */
+footer {
+    background: linear-gradient(135deg, #1107d0, #0056b3);
+    color: white;
+    text-align: center;
+    padding: 15px 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Responsive Footer Adjustments */
+@media (max-width: 768px) {
+    footer {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    body {
+        padding-bottom: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    body {
+        padding-bottom: 80px;
+    }
+}
+
+/* Styling for the Search Bar & Button */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* Search Input Field */
+.search-container input {
+    padding: 12px 15px;
+    width: 320px; /* Increased Width */
+    font-size: 16px;
+    border: 2px solid #007BFF;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Search Input Focus Effect */
+.search-container input:focus {
+    border-color: #0056b3;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5);
+}
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Aligns items: buttons on right, title on left */
+    align-items: center;
+    padding: 10px 20px;
+    margin-right: 203px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    gap: 10px;
+    max-width: 160px;
+    white-space: nowrap;
+    margin-top: 10px;
+}
+
+
+/* Make sure buttons are styled properly */
+.button-container button {
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+
+.search-container input:focus {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.3);
+}
+
+
+/* Search Button */
+.search-container button {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+/* Hover Effect for Button */
+.search-container button:hover {
+    background: linear-gradient(135deg, #0056b3, #003d80);
+    transform: scale(1.05);
+}
+
+/* Button Icon */
+.search-container button::before {
+    content: "🔍"; /* Search Icon */
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}
+
+@media (max-width: 768px) {
+    .button-container {
+        display: flex;
+        flex-direction: column;  /* Stack buttons vertically */
+        align-items: flex-end;  /* Align buttons to the right */
+        gap: 8px; /* Reduce space between buttons */
+    }
+
+    .button-container button {
+        padding: 8px 12px; /* Reduce padding */
+        font-size: 14px;  /* Reduce font size */
+        width: auto; /* Prevent buttons from stretching */
+    }
+}
+
+/* Dropdown Container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%; /* Ensures it opens below the button */
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    min-width: 140px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 9999; /* Ensure it's always above other elements */
+    overflow: visible; /* Prevent clipping */
+}
+
+/* Dropdown Links */
+.dropdown-content a {
+    display: block;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background: #007BFF;
+    color: white;
+}
+
+/* Show Dropdown When Clicking */
+.dropdown.active .dropdown-content {
+    display: block;
+}
