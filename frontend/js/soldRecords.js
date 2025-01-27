@@ -1,23 +1,23 @@
 const SOLD_API_URL = "http://localhost:5000/api/sold/"; // ✅ Correct API URL
 const socket = io("http://localhost:5000"); // ✅ Ensure Socket.io is connected
 
+
+// year
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("year").textContent = new Date().getFullYear();
+});
+
+
 // 🔄 Function to Fetch and Display Sold Vinyl Records
 async function fetchSoldRecords(query = "") {
     try {
         let url = SOLD_API_URL;
-        if (query.trim()) url += `/search?query=${encodeURIComponent(query)}`; // ✅ Add search query if present
+        if (query.trim()) url += `/search?query=${encodeURIComponent(query)}`;
 
         console.log(`📡 Fetching from: ${url}`);
-
         const response = await fetch(url);
-        console.log("📡 Raw Response:", response);
 
-        const contentType = response.headers.get("content-type");
         if (!response.ok) throw new Error(`Server Error: ${response.status} - ${response.statusText}`);
-        if (!contentType || !contentType.includes("application/json")) {
-            throw new Error("Invalid response format (not JSON). Check API.");
-        }
-
         const records = await response.json();
         console.log("✅ Sold Records:", records);
 
@@ -57,10 +57,14 @@ async function fetchSoldRecords(query = "") {
             tableBody.innerHTML += row;
         });
 
+        // ✅ Enable Download Button After Data Loads
+        document.getElementById("downloadPdfBtn").disabled = false;
+
     } catch (error) {
         console.error("❌ Error fetching sold records:", error);
     }
 }
+
 
 // 🔍 Function to handle real-time search input changes
 function handleSearchInput() {
@@ -99,3 +103,29 @@ document.addEventListener("DOMContentLoaded", () => {
 function goBack() {
     window.location.href = "../index.html";
 }
+function downloadTableAsPDF() {
+    const headers = Array.from(document.querySelectorAll("th")).map(header => ({ text: header.innerText, bold: true, fillColor: '#007BFF', color: 'white' }));
+    const data = Array.from(document.querySelectorAll("tbody tr")).map(row => 
+        Array.from(row.querySelectorAll("td")).map(cell => cell.innerText)
+    );
+
+    const docDefinition = {
+        content: [
+            { text: 'رکوردهای فروخته شده وینیل', alignment: 'center', fontSize: 16, bold: true, margin: [0, 10] },
+            {
+                table: {
+                    headerRows: 1,
+                    widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+                    body: [headers, ...data]
+                }
+            }
+        ],
+        defaultStyle: {
+            font: 'Roboto'
+        }
+    };
+
+    pdfMake.createPdf(docDefinition).download("Sold_Vinyl_Records.pdf");
+}
+
+document.getElementById("downloadPdfBtn").addEventListener("click", downloadTableAsPDF);

@@ -2,6 +2,7 @@ const API_URL = "http://localhost:5000/api/vinyl";
 const SOLD_API_URL = "http://localhost:5000/api/sold"; 
 const SELL_API_URL = "http://localhost:5000/api/sold/sell"; // ✅ Corrected Sell API URL
 const socket = io("http://localhost:5000");
+
 let editingVinylId = null; // Store the ID of the vinyl being edited
 
 
@@ -9,15 +10,31 @@ let deleteVinylId = null;
 let sellingVinylId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Ensure the date picker library is loaded
+        if (typeof $ !== "undefined" && $.fn.persianDatepicker) {
+            $("#vinylEntryDate").persianDatepicker({
+                format: "YYYY/MM/DD",  
+                autoClose: true,        
+                initialValue: false,    
+                observer: true,
+                calendar: {
+                    persian: {
+                        locale: 'fa',  
+                        leapYearMode: 'algorithmic' 
+                    }
+                }
+            });
+    
+            console.log("✅ Date Picker Initialized Successfully!");
+        } else {
+            console.error("❌ Persian Date Picker not loaded.");
+        }
+    });
+    
     document.getElementById("year").textContent = new Date().getFullYear();
 });
-
-// document.getElementById("searchInput").addEventListener("input", function () {
-//     if (this.value.trim() === "") {
-//         fetchVinylRolls(); // Reload data when the input is cleared
-//     }
-// });
-
 
 // Fetch and Display Vinyl Rolls
 async function fetchVinylRolls(searchQuery = "") {
@@ -32,7 +49,12 @@ async function fetchVinylRolls(searchQuery = "") {
 
         const data = await response.json();
         let tableBody = document.getElementById("vinylTable");
+        if (!tableBody) {
+            console.error("❌ Error: Table body element not found.");
+            return;
+        }
         tableBody.innerHTML = "";
+        
 
         if (data.length === 0) {
             // Show "Record Not Found!" message in a full-row colspan
@@ -71,28 +93,6 @@ async function fetchVinylRolls(searchQuery = "") {
     }
 }
 
-$(document).ready(function () {
-    console.log("✅ Persian Datepicker Loaded!");
-
-    // Initialize Persian Date Picker on Entry Date Input
-    $("#vinylEntryDate").persianDatepicker({
-        format: "YYYY/MM/DD",  // 📆 Show Jalali date format like 1403/11/7
-        autoClose: true,        // ✅ Closes automatically after selecting a date
-        initialValue: false,     // 🟢 Ensures input starts empty (not today's date)
-        observer: true,         // 👀 Watches input for manual edits
-        calendar: {
-            persian: {
-                locale: 'fa',    // 🌍 Persian (Farsi) language support
-                leapYearMode: 'algorithmic'  // 📅 Ensures leap years are calculated correctly
-            }
-        }
-    });
-
-    // Debugging: Check if the input is receiving the correct Jalali date
-    $("#vinylEntryDate").on("change", function () {
-        console.log("📅 Selected Jalali Date:", $(this).val());
-    });
-});
 
 
 
@@ -178,7 +178,7 @@ async function addVinyl() {
         color: document.getElementById("vinylColor").value.trim(),
         length: parseFloat(document.getElementById("vinylLength").value),
         width: parseFloat(document.getElementById("vinylWidth").value),
-        entryDate: entryDate,
+        entryDate: new Date(document.getElementById("vinylEntryDate").value).toISOString(),
         details: document.getElementById("vinylDetails").value.trim()
     };
 
@@ -265,6 +265,29 @@ async function updateVinyl() {
     }
 }
 
+function showNotification(message, isSuccess = true) {
+    const notification = document.getElementById("notification");
+    const messageText = document.getElementById("notification-message");
+
+    // Update message and background color
+    messageText.textContent = message;
+    notification.style.backgroundColor = isSuccess ? "green" : "red";
+
+    // Reset styles to make it visible
+    notification.style.display = "block";
+    notification.style.opacity = "1";
+    notification.style.animation = "fadeIn 0.5s ease-in-out";
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+        notification.style.animation = "fadeOut 0.5s ease-in-out";
+        setTimeout(() => {
+            notification.style.display = "none";  // Hide after fade-out completes
+            notification.style.opacity = "0";
+        }, 500);
+    }, 3000);
+}
+
 
 // Open and Close Delete Modal
 function openDeleteModal(vinylId) { 
@@ -280,10 +303,13 @@ async function confirmDelete() {
     try {
         const response = await fetch(`${API_URL}/${deleteVinylId}`, { method: "DELETE" });
         if (!response.ok) throw new Error("Failed to delete vinyl roll");
+        showNotification("✅ Vinyl deleted successfully!", true);  // ✅ Show success notification
 
         fetchVinylRolls();
         socket.emit("newVinyl");
     } catch (error) {
+        showNotification("❌ Failed to delete vinyl!", false);  // ✅ Show failure notification
+
         console.error("Error deleting vinyl:", error);
     }
 

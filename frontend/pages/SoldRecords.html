@@ -5,14 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sold Vinyl Records</title>
     <link rel="stylesheet" href="../css/styles.css"> <!-- ✅ Corrected Path -->
+
+    <!-- pdfmake -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+    
 </head>
 <body>
     <h1>Sold Vinyl Records</h1>
-    <button onclick="window.location.href='../index.html'">⬅ Back to Dashboard</button>
+    <button onclick="window.location.href='http://localhost:5000'">⬅ Back to Dashboard</button>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by Type, Color, etc." autofocus>
+        <input type="text" id="searchInput" placeholder="Search by Name, Type, Color, etc." autofocus>
         <!-- <button onclick="filterVinyls()">Search</button> -->
+       <!-- ✅ Download Button -->
+
+    </div>
+    <button id="downloadPdfBtn" class="pdf-download-button" disabled>📥 Download PDF</button>
+
+    
     </div>
 
     <table>

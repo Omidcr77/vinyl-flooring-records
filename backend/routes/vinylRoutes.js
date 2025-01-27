@@ -118,23 +118,32 @@ router.delete('/:id', async (req, res) => {
             return res.status(404).json({ error: "Vinyl roll not found" });
         }
 
+        // ✅ Step 1: Delete the Vinyl Roll
         await VinylRoll.findByIdAndDelete(req.params.id);
 
-        // Renumber remaining rolls
-        const remainingRolls = await VinylRoll.find().sort("rollNumber");
-        await Promise.all(remainingRolls.map(async (roll, index) => {
-            roll.rollNumber = index + 1;
-            await roll.save();
-        }));
+        // ✅ Step 2: Fetch Remaining Rolls Sorted by Roll Number
+        const remainingRolls = await VinylRoll.find().sort({ rollNumber: 1 });
 
-        // Emit update to frontend
+        // ✅ Step 3: Temporarily Remove `unique` Constraint (Workaround)
+        await VinylRoll.collection.dropIndex("rollNumber_1").catch(err => console.log("No existing index to drop"));
+
+        // ✅ Step 4: Renumber Rolls Sequentially to Avoid Duplicates
+        for (let i = 0; i < remainingRolls.length; i++) {
+            await VinylRoll.findByIdAndUpdate(remainingRolls[i]._id, { rollNumber: i + 1 });
+        }
+
+        // ✅ Step 5: Restore `unique` Index for Future Inserts
+        await VinylRoll.collection.createIndex({ rollNumber: 1 }, { unique: true });
+
+        // ✅ Emit update to frontend
         req.io.emit("updateVinyls");
 
-        res.json({ message: "Vinyl roll deleted and renumbered successfully" });
+        return res.json({ message: "Vinyl roll deleted and renumbered successfully" });
     } catch (error) {
         console.error("❌ Error deleting vinyl:", error);
-        res.status(500).json({ error: "Failed to delete vinyl roll." });
+        return res.status(500).json({ error: "Failed to delete vinyl roll." });
     }
 });
+
 
 module.exports = router;

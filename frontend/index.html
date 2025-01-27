@@ -68,8 +68,9 @@
     </div>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by Type, Color, etc." autofocus>
+        <input type="text" id="searchInput" placeholder="Search by Name, Type, Color, etc." autofocus>
         <!-- <button onclick="filterVinyls()">Search</button> -->
+         
     </div>
     
     <!-- Vinyl Rolls Table -->
@@ -108,6 +109,13 @@
         </div>
     </div>
 
+    <!-- ✅ Notification Modal (Top Left Corner) -->
+<div id="notification" class="notification-modal">
+    <p id="notification-message"></p>
+</div>
+
+    
+
     <!-- Add New Vinyl Modal -->
     <div id="addVinylModal" class="modal">
         <div class="modal-content">
@@ -128,7 +136,7 @@
             <input type="number" id="vinylWidth" required>
 
             <label>Entry Date:</label>
-            <input type="text" id="vinylEntryDate" autocomplete="off" required>
+            <input type="date" id="vinylEntryDate" autocomplete="off" required>
 
 
             <label>Details:</label>
@@ -138,6 +146,7 @@
         </div>
     </div>
 
+    <br><br><br>
     <!-- Footer -->
     <footer>
         <p>&copy; <span id="year"></span> Vinyl Flooring Records Website. All Rights Reserved.</p>
@@ -149,5 +158,7 @@
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
     </script>
+
+
 </body>
 </html>
