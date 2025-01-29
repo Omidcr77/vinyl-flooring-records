@@ -27,20 +27,25 @@ async function fetchSoldRecords(query = "") {
             return;
         }
 
-        // ✅ Clear existing rows
-        tableBody.innerHTML = "";
+        tableBody.innerHTML = ""; // Clear table before adding new rows
 
-        // ✅ Show "No Records" message if empty
+        // ✅ Initialize total length sum
+        let totalLength = 0;
+
         if (records.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="9">No matching sold records found</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="9">⚠️ هیچ رکورد فروخته شده مطابقی یافت نشد</td></tr>`;
+            document.getElementById("recordCount").textContent = 0;
+            document.getElementById("totalLength").textContent = "0.00";
             return;
         }
 
-        // ✅ Append each record to the table
+        // ✅ Populate Table
         records.forEach((record, index) => {
             let soldDateFormatted = record.soldDate ? new Date(record.soldDate).toLocaleDateString() : "Unknown Date";
             let entryDateFormatted = record.entryDate ? new Date(record.entryDate).toLocaleDateString() : "Unknown Date";
             let customerName = record.customerName || "Unknown Customer";
+
+            totalLength += parseFloat(record.length) || 0; // Sum up lengths
 
             let row = `
             <tr>
@@ -48,7 +53,7 @@ async function fetchSoldRecords(query = "") {
                 <td>${customerName}</td>
                 <td>${record.vinylName}</td>
                 <td>${record.type}</td>
-                <td>${record.color}</td>
+                <td>${record.color || "N/A"}</td>
                 <td>${record.length}</td>
                 <td>${record.width}</td>
                 <td>${entryDateFormatted}</td>
@@ -57,13 +62,15 @@ async function fetchSoldRecords(query = "") {
             tableBody.innerHTML += row;
         });
 
-        // ✅ Enable Download Button After Data Loads
-        document.getElementById("downloadPdfBtn").disabled = false;
+        // ✅ Update record count and total length
+        document.getElementById("recordCount").textContent = records.length;
+        document.getElementById("totalLength").textContent = totalLength.toFixed(2);
 
     } catch (error) {
         console.error("❌ Error fetching sold records:", error);
     }
 }
+
 
 
 // 🔍 Function to handle real-time search input changes
@@ -129,3 +136,5 @@ function downloadTableAsPDF() {
 }
 
 document.getElementById("downloadPdfBtn").addEventListener("click", downloadTableAsPDF);
+
+

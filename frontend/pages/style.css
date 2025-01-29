@@ -69,15 +69,17 @@ h1 {
     font-size: 14px;  /* Reduced font size */
     max-width: 200px;  /* Prevents it from becoming too wide */
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 8px;
     transition: all 0.3s ease;
     margin: 15px auto;  /* Centers the button */
     text-align: center;
+    transition: all 0.3s ease-in-out;
 }
 
 
 .back-button:hover {
-    background: linear-gradient(135deg, #ff6600, #cc5200);
+    background: #0056b3;
+    transform: scale(1.05);
 }
 
 /* Table Styling */

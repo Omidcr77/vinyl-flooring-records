@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="../favicon.png" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>رکوردهای فروشات</title>
@@ -27,10 +29,24 @@
     </div>
 
     <table>
+
+        <div class="stats-container">
+            <div class="stats-box">
+                <span class="stats-icon">📊</span>
+                <p>تعداد کل رکوردها:</p>
+                <span class="stats-value" id="recordCount">0</span>
+            </div>
+            <div class="stats-box">
+                <span class="stats-icon">📏</span>
+                <p>مجموع متراژ (مترطول):</p>
+                <span class="stats-value" id="totalLength">0.00</span>
+            </div>
+        </div>
+
         <thead>
             <tr>
-                <th>ردیف</th>
                 <th>نام مشتری</th>
+                <th>ردیف</th>
                 <th>نام موکت</th> <!-- ✅ NEW COLUMN -->
                 <th>نوع</th>
                 <th>رنگ</th>

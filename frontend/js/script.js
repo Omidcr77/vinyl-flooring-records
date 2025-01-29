@@ -49,25 +49,31 @@ async function fetchVinylRolls(searchQuery = "") {
 
         const data = await response.json();
         let tableBody = document.getElementById("vinylTable");
+
         if (!tableBody) {
             console.error("❌ Error: Table body element not found.");
             return;
         }
-        tableBody.innerHTML = "";
-        
+
+        tableBody.innerHTML = ""; // Clear existing table rows
+        let totalLength = 0; // Initialize total length
 
         if (data.length === 0) {
-            // Show "Record Not Found!" message in a full-row colspan
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="8" class="no-record">⚠️ Record Not Found!</td>
-                </tr>`;
+            // ✅ Show "No Records Found!" message
+            tableBody.innerHTML = `<tr><td colspan="8" class="no-record">⚠️ هیچ رکورد مطابقی یافت نشد</td></tr>`;
+            
+            // ✅ Update record count and total length when no records exist
+            document.getElementById("recordCount").textContent = 0;
+            document.getElementById("totalLength").textContent = "0.00";
             return;
         }
 
-        data.forEach(roll => {
+        // ✅ Loop through records and dynamically set roll numbers
+        data.forEach((roll, index) => {
+            totalLength += parseFloat(roll.length) || 0; // Correctly sum up lengths
+
             let row = `<tr>
-                <td>${roll.rollNumber}</td>
+                <td>${index + 1}</td> <!-- ✅ Assign new roll numbers sequentially -->
                 <td>${roll.vinylName}</td>
                 <td>${roll.type}</td>
                 <td>${roll.color || 'N/A'}</td>
@@ -88,10 +94,16 @@ async function fetchVinylRolls(searchQuery = "") {
             tableBody.innerHTML += row;
         });
 
+        // ✅ Update record count and total length
+        document.getElementById("recordCount").textContent = data.length;
+        document.getElementById("totalLength").textContent = totalLength.toFixed(2); // Format to 2 decimal places
+
     } catch (error) {
         console.error("Error fetching vinyl rolls:", error);
     }
 }
+
+
 
 
 
@@ -143,7 +155,7 @@ document.querySelectorAll('.dropdown-content').forEach(menu => {
 function handleSearchInput() {
     const query = document.getElementById("searchInput").value.trim();
     fetchVinylRolls(query); // ✅ Dynamically search and display results
-}
+} 
 
 // ✅ Attach search input event listener (real-time filtering)
 document.getElementById("searchInput").addEventListener("input", handleSearchInput);
@@ -378,9 +390,15 @@ async function fetchSoldRecords() {
     }
 }
 
+
 // ✅ Listen for Real-Time Updates
 socket.on("updateVinyls", fetchVinylRolls);
 socket.on("updateSoldRecords", fetchSoldRecords);
+socket.on("updateVinyls", fetchVinylRolls);
+
+
+
+
 
 // Attach event listeners
 document.getElementById("confirmDeleteBtn").addEventListener("click", confirmDelete);

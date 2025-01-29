@@ -32,7 +32,7 @@
 <div id="editVinylModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeEditVinylModal()">&times;</span>
-        <h2>Edit Vinyl Roll</h2>
+        <h2>ویرایش</h2>
         
         <label>نام موکت:</label>
         <input type="text" id="editVinylName" required>
@@ -78,6 +78,19 @@
     
     <!-- Vinyl Rolls Table -->
     <div class="tb">
+        <div class="stats-container">
+            <div class="stats-box">
+                <span class="stats-icon">📊</span>
+                <p>تعداد کل رکوردها:</p>
+                <span class="stats-value" id="recordCount">0</span>
+            </div>
+            <div class="stats-box">
+                <span class="stats-icon">📏</span>
+                <p>مجموع متراژ (مترطول):</p>
+                <span class="stats-value" id="totalLength">0.00</span>
+            </div>
+        </div>
+        
         <table>
             <thead>
                 <tr>

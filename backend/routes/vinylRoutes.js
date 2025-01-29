@@ -67,7 +67,9 @@ router.get('/', async (req, res) => {
             };
         }
 
+        // ✅ Ensure results are always sorted by roll number
         const records = await VinylRoll.find(query).sort("rollNumber");
+
         res.status(200).json(records);
     } catch (error) {
         console.error("❌ Error fetching vinyl rolls:", error);
@@ -115,7 +117,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const vinyl = await VinylRoll.findById(req.params.id);
         if (!vinyl) {
-            return res.status(404).json({ error: "Vinyl roll not found" });
+            return res.status(404).json({ error: "Vinyl roll not found." });
         }
 
         // ✅ Step 1: Delete the Vinyl Roll
@@ -144,6 +146,7 @@ router.delete('/:id', async (req, res) => {
         return res.status(500).json({ error: "Failed to delete vinyl roll." });
     }
 });
+
 
 
 module.exports = router;
