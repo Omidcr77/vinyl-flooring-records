@@ -76,11 +76,11 @@ async function fetchVinylRolls(searchQuery = "") {
                 <td>${new Date(roll.entryDate).toLocaleDateString()}</td>
                 <td>
                     <div class="dropdown">
-                        <button class="dropbtn" onclick="toggleDropdown(event, 'dropdown-${roll._id}')">⚙️ Actions</button>
+                        <button class="dropbtn" onclick="toggleDropdown(event, 'dropdown-${roll._id}')">⚙️ اقدام</button>
                         <div class="dropdown-content" id="dropdown-${roll._id}">
-                            <a href="#" onclick="openSellVinylModal('${roll._id}')">💰 Sell</a>
-                            <a href="#" onclick="openDeleteModal('${roll._id}')">❌ Delete</a>
-                            <a href="#" onclick="openEditVinylModal('${roll._id}')">✏️ Edit</a>
+                            <a href="#" onclick="openSellVinylModal('${roll._id}')">💰 فروش</a>
+                            <a href="#" onclick="openDeleteModal('${roll._id}')">❌ حذف</a>
+                            <a href="#" onclick="openEditVinylModal('${roll._id}')">✏️ ویرایش</a>
                         </div>
                     </div>
                 </td>

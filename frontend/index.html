@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <link rel="icon" type="image/png" href="favicon.png" />
+
     <!-- Persian Date Picker (Supports Solar Hijri) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/css/persian-datepicker.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
@@ -8,18 +11,18 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vinyl Flooring Dashboard</title>
+    <title>رکورد موکت ها</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1 >Vinyl Flooring Rolls Records Website</h1>
+    <h1 >رکوردهای موکت</h1>
 
     <div class="header-container">
         <h1></h1>
         <div class="button-container">
-            <button onclick="window.location.href='pages/soldRecords.html'">📜 View Sold Records</button>
-            <button onclick="openAddVinylModal()">➕ Add New Vinyl</button>
-            <button onclick="fetchVinylRolls()">🔄 Refresh List</button>
+            <button onclick="window.location.href='pages/soldRecords.html'">📜 فروشات قبلی</button>
+            <button onclick="openAddVinylModal()">➕ رکورد جدید اضافه کنید</button>
+            <!-- <button onclick="fetchVinylRolls()">🔄 Refresh List</button> -->
         </div>
 
     </div>
@@ -31,25 +34,25 @@
         <span class="close" onclick="closeEditVinylModal()">&times;</span>
         <h2>Edit Vinyl Roll</h2>
         
-        <label>Vinyl Name:</label>
+        <label>نام موکت:</label>
         <input type="text" id="editVinylName" required>
 
-        <label>Type:</label>
+        <label>نوع:</label>
         <input type="text" id="editVinylType" required>
 
-        <label>Color:</label>
+        <label>رنگ:</label>
         <input type="text" id="editVinylColor" required>
 
-        <label>Length (meters):</label>
+        <label>متراژ-مترطول:</label>
         <input type="number" id="editVinylLength" required>
 
-        <label>Width (meters):</label>
+        <label>عرض:</label>
         <input type="number" id="editVinylWidth" required>
 
-        <label>Entry Date:</label>
+        <label>تاریخ ثبت:</label>
         <input type="date" id="editVinylEntryDate">
 
-        <button onclick="updateVinyl()">✅ Update Vinyl</button>
+        <button onclick="updateVinyl()">✅ بروز رسانی</button>
     </div>
 </div>
 
@@ -58,17 +61,17 @@
     <div id="deleteConfirmationModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeDeleteModal()">&times;</span>
-            <h2>Are you sure?</h2>
-            <p>Do you really want to delete this vinyl roll? This action cannot be undone.</p>
+            <h2>آیا مطمیّن هستید؟ </h2>
+            <p>آیا می خواهید رکورد را حذف کنید؟ .</p>
             <div class="modal-buttons">
-                <button id="confirmDeleteBtn" class="danger">Yes, Delete</button>
-                <button onclick="closeDeleteModal()" class="cancel">Cancel</button>
+                <button id="confirmDeleteBtn" class="danger">بلی حذف شود</button>
+                <button onclick="closeDeleteModal()" class="cancel">لغو</button>
             </div>
         </div>
     </div>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by Name, Type, Color, etc." autofocus>
+        <input type="text" id="searchInput" placeholder="... جستجو موکت با نوعیت و رنگ" autofocus>
         <!-- <button onclick="filterVinyls()">Search</button> -->
          
     </div>
@@ -78,14 +81,14 @@
         <table>
             <thead>
                 <tr>
-                    <th>#</th>  <!-- Roll Number Column -->
-                    <th>Name</th> <!-- ✅ NEW COLUMN -->
-                    <th>Type</th>
-                    <th>Color</th>
-                    <th>Length</th>
-                    <th>Width</th>
-                    <th>Entry Date</th>
-                    <th>Actions</th>
+                    <th>ردیف</th>  <!-- Roll Number Column -->
+                    <th>نام موکت</th> <!-- ✅ NEW COLUMN -->
+                    <th>نوع</th>
+                    <th>رنگ</th>
+                    <th>متراژ-مترطول</th>
+                    <th>عرض</th>
+                    <th>تاریخ ثبت</th>
+                    <th>اقدام</th>
                 </tr>
             </thead>
             <tbody id="vinylTable">
@@ -98,14 +101,14 @@
     <div id="sellVinylModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeSellVinylModal()">&times;</span>
-            <h2>Mark Vinyl as Sold</h2>
-            <label>Customer Name:</label>
+            <h2>فروش</h2>
+            <label>نام مشتری:</label>
             <input type="text" id="customerName" required>
 
-            <label>Date Sold:</label>
+            <label>تاریخ فروش:</label>
             <input type="date" id="soldDate">
 
-            <button onclick="sellVinyl()">✅ Confirm Sale</button>
+            <button onclick="sellVinyl()">✅ تأیید</button>
         </div>
     </div>
 
@@ -120,30 +123,31 @@
     <div id="addVinylModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeAddVinylModal()">&times;</span>
-            <h2>Add New Vinyl Roll</h2>
-            <label>Name:</label>
+            <h2>اضافه کردن رکورد جدید</h2>
+            <label>نام موکت:</label>
             <input type="text" id="vinylName" required>
-            <label>Type:</label>
+            <label>نوع:</label>
             <input type="text" id="vinylType" required>
             
-            <label>Color:</label>
+            <label>رنگ:</label>
             <input type="text" id="vinylColor" required>
 
-            <label>Length (meters):</label>
+            <label>متراژ-متر طول:</label>
             <input type="number" id="vinylLength" required>
 
-            <label>Width (meters):</label>
+            <label>عرض:</label>
             <input type="number" id="vinylWidth" required>
 
-            <label>Entry Date:</label>
+            <label>تاریخ ثبت:</label>
             <input type="date" id="vinylEntryDate" autocomplete="off" required>
 
 
-            <label>Details:</label>
+            <label>دیگر جزییات:</label>
             <textarea id="vinylDetails"></textarea>
 
-            <button onclick="addVinyl()">✅ Add Vinyl</button>
+            <button onclick="addVinyl()">✅ اضافه شود</button>
         </div>
+        <p class="sum">مجموعه موکت ها: </p>
     </div>
 
     <br><br><br>

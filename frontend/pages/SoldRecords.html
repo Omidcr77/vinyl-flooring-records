@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sold Vinyl Records</title>
+    <title>رکوردهای فروشات</title>
     <link rel="stylesheet" href="../css/styles.css"> <!-- ✅ Corrected Path -->
 
     <!-- pdfmake -->
@@ -12,16 +12,16 @@
     
 </head>
 <body>
-    <h1>Sold Vinyl Records</h1>
-    <button onclick="window.location.href='http://localhost:5000'">⬅ Back to Dashboard</button>
+    <h1>رکوردهای فروشات</h1>
+    <button onclick="window.location.href='http://localhost:5000'">⬅ برگشت به صفحه قلی</button>
 
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by Name, Type, Color, etc." autofocus>
+        <input type="text" id="searchInput" placeholder="... جستجو موکت با نوعیت و رنگ" autofocus>
         <!-- <button onclick="filterVinyls()">Search</button> -->
        <!-- ✅ Download Button -->
 
     </div>
-    <button id="downloadPdfBtn" class="pdf-download-button" disabled>📥 Download PDF</button>
+    <!-- <button id="downloadPdfBtn" class="pdf-download-button" disabled>📥 Download PDF</button> -->
 
     
     </div>
@@ -29,15 +29,15 @@
     <table>
         <thead>
             <tr>
-                <th>#</th>
-                <th>Customer Name</th>
-                <th>Name</th> <!-- ✅ NEW COLUMN -->
-                <th>Type</th>
-                <th>Color</th>
-                <th>Length</th>
-                <th>Width</th>
-                <th>Entry Date</th>
-                <th>Sold Date</th>
+                <th>ردیف</th>
+                <th>نام مشتری</th>
+                <th>نام موکت</th> <!-- ✅ NEW COLUMN -->
+                <th>نوع</th>
+                <th>رنگ</th>
+                <th>متراژ-مترطول</th>
+                <th>عرض</th>
+                <th>تاریخ ثبت</th>
+                <th>تاریخ فروش</th>
             </tr>
         </thead>
         <tbody id="soldRecordsTable"></tbody>
