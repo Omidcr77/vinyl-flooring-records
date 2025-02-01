@@ -10,39 +10,17 @@ let deleteVinylId = null;
 let sellingVinylId = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // Ensure the date picker library is loaded
-        if (typeof $ !== "undefined" && $.fn.persianDatepicker) {
-            $("#vinylEntryDate").persianDatepicker({
-                format: "YYYY/MM/DD",  
-                autoClose: true,        
-                initialValue: false,    
-                observer: true,
-                calendar: {
-                    persian: {
-                        locale: 'fa',  
-                        leapYearMode: 'algorithmic' 
-                    }
-                }
-            });
-    
-            console.log("✅ Date Picker Initialized Successfully!");
-        } else {
-            console.error("❌ Persian Date Picker not loaded.");
-        }
-    });
-    
+    document.querySelectorAll(".modal").forEach(modal => modal.style.display = "none");
     document.getElementById("year").textContent = new Date().getFullYear();
+    fetchVinylRolls();
 });
+
 
 // Fetch and Display Vinyl Rolls
 async function fetchVinylRolls(searchQuery = "") {
     try {
         let url = API_URL;
-        if (searchQuery) {
-            url += `?search=${encodeURIComponent(searchQuery)}`;
-        }
+        if (searchQuery) url += `?search=${encodeURIComponent(searchQuery)}`;
 
         const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch vinyl rolls.");
@@ -55,25 +33,22 @@ async function fetchVinylRolls(searchQuery = "") {
             return;
         }
 
-        tableBody.innerHTML = ""; // Clear existing table rows
-        let totalLength = 0; // Initialize total length
+        tableBody.innerHTML = ""; // Only clear table before re-populating
 
+        let totalLength = 0;
         if (data.length === 0) {
-            // ✅ Show "No Records Found!" message
             tableBody.innerHTML = `<tr><td colspan="8" class="no-record">⚠️ هیچ رکورد مطابقی یافت نشد</td></tr>`;
-            
-            // ✅ Update record count and total length when no records exist
             document.getElementById("recordCount").textContent = 0;
             document.getElementById("totalLength").textContent = "0.00";
             return;
         }
 
-        // ✅ Loop through records and dynamically set roll numbers
         data.forEach((roll, index) => {
-            totalLength += parseFloat(roll.length) || 0; // Correctly sum up lengths
+            totalLength += parseFloat(roll.length) || 0;
+            let row = document.createElement("tr");
 
-            let row = `<tr>
-                <td>${index + 1}</td> <!-- ✅ Assign new roll numbers sequentially -->
+            row.innerHTML = `
+                <td>${index + 1}</td>
                 <td>${roll.vinylName}</td>
                 <td>${roll.type}</td>
                 <td>${roll.color || 'N/A'}</td>
@@ -85,28 +60,22 @@ async function fetchVinylRolls(searchQuery = "") {
                         <button class="dropbtn" onclick="toggleDropdown(event, 'dropdown-${roll._id}')">⚙️ اقدام</button>
                         <div class="dropdown-content" id="dropdown-${roll._id}">
                             <a href="#" onclick="openSellVinylModal('${roll._id}')">💰 فروش</a>
-                            <a href="#" onclick="openDeleteModal('${roll._id}')">❌ حذف</a>
                             <a href="#" onclick="openEditVinylModal('${roll._id}')">✏️ ویرایش</a>
+                            <a href="#" onclick="openDeleteModal('${roll._id}')">❌ حذف</a>
                         </div>
                     </div>
-                </td>
-            </tr>`;
-            tableBody.innerHTML += row;
+                </td>`;
+
+            tableBody.appendChild(row);
         });
 
-        // ✅ Update record count and total length
         document.getElementById("recordCount").textContent = data.length;
-        document.getElementById("totalLength").textContent = totalLength.toFixed(2); // Format to 2 decimal places
+        document.getElementById("totalLength").textContent = totalLength.toFixed(2);
 
     } catch (error) {
         console.error("Error fetching vinyl rolls:", error);
     }
 }
-
-
-
-
-
 
 
 
@@ -124,24 +93,50 @@ function filterVinyls() {
 
 // Function to toggle dropdown visibility
 function toggleDropdown(event, id) {
-    event.stopPropagation(); // Prevents clicks from closing immediately
+    event.stopPropagation();
     let dropdown = document.getElementById(id);
-    
-    // Close all other dropdowns before opening this one
+
     document.querySelectorAll('.dropdown-content').forEach(menu => {
-        if (menu !== dropdown) menu.style.display = 'none';
+        if (menu !== dropdown) menu.classList.remove("show"); 
     });
 
-    // Toggle the dropdown visibility
-    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    dropdown.classList.toggle("show");
 }
 
 // Close dropdown when clicking outside
 document.addEventListener("click", function () {
     document.querySelectorAll('.dropdown-content').forEach(menu => {
-        menu.style.display = 'none';
+        menu.classList.remove("show");
     });
 });
+
+// Prevent dropdown from closing when clicking inside
+document.querySelectorAll('.dropdown-content').forEach(menu => {
+    menu.addEventListener("click", function (event) {
+        event.stopPropagation();
+    });
+});
+
+
+function closeAddVinylModal() {
+    document.getElementById("addVinylModal").style.display = "none";
+    document.getElementById("vinylName").value = "";
+    document.getElementById("vinylType").value = "";
+    document.getElementById("vinylColor").value = "";
+    document.getElementById("vinylLength").value = "";
+    document.getElementById("vinylWidth").value = "";
+    document.getElementById("vinylEntryDate").value = "";
+    document.getElementById("vinylDetails").value = "";
+}
+
+
+// Close dropdown when clicking outside
+document.addEventListener("click", () => {
+    document.querySelectorAll('.dropdown-content').forEach(menu => {
+        menu.classList.remove("show"); // Remove the show class instead of setting display to none
+    });
+});
+
 
 // Prevent dropdown from closing when clicking inside
 document.querySelectorAll('.dropdown-content').forEach(menu => {
@@ -160,11 +155,6 @@ function handleSearchInput() {
 // ✅ Attach search input event listener (real-time filtering)
 document.getElementById("searchInput").addEventListener("input", handleSearchInput);
 
-// ✅ Fetch records on page load (avoids duplicate onload calls)
-document.addEventListener("DOMContentLoaded", () => {
-    fetchVinylRolls();
-});
-
 // ✅ Listen for "Enter" key press in search input
 document.getElementById("searchInput").addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
@@ -176,7 +166,9 @@ document.getElementById("searchInput").addEventListener("keydown", (event) => {
 
 
 // Open and Close Add Vinyl Modal
-function openAddVinylModal() { document.getElementById("addVinylModal").style.display = "block"; }
+function openAddVinylModal() { 
+    closeAllModals(); // Ensure other modals are closed before opening a new one
+    document.getElementById("addVinylModal").style.display = "block"; }
 function closeAddVinylModal() { document.getElementById("addVinylModal").style.display = "none"; }
 
 // Add Vinyl Roll
@@ -269,7 +261,7 @@ async function updateVinyl() {
 
         fetchVinylRolls(); // Refresh the records
         closeEditVinylModal(); // Close the modal
-        socket.emit("updateVinyls"); // Notify frontend
+        socket.emit("updateVinyl"); // Notify frontend
 
     } catch (error) {
         console.error("Error updating vinyl:", error);
@@ -394,11 +386,6 @@ async function fetchSoldRecords() {
 // ✅ Listen for Real-Time Updates
 socket.on("updateVinyls", fetchVinylRolls);
 socket.on("updateSoldRecords", fetchSoldRecords);
-socket.on("updateVinyls", fetchVinylRolls);
-
-
-
-
 
 // Attach event listeners
 document.getElementById("confirmDeleteBtn").addEventListener("click", confirmDelete);

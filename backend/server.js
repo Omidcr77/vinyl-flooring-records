@@ -24,7 +24,7 @@ app.set("io", io);
 // CORS Configuration
 app.use(cors({
     origin: "*",
-    methods: ["GET", "POST", "DELETE"],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type"],
 }));
 

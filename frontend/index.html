@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
 
     <link rel="icon" type="image/png" href="favicon.png" />
 
     <!-- Persian Date Picker (Supports Solar Hijri) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/css/persian-datepicker.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/js/persian-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/css/persian-datepicker.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/persian-datepicker/dist/js/persian-datepicker.min.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,69 +15,37 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1 >رکوردهای موکت</h1>
 
-    <div class="header-container">
-        <h1></h1>
-        <div class="button-container">
-            <button onclick="window.location.href='pages/soldRecords.html'">📜 فروشات قبلی</button>
-            <button onclick="openAddVinylModal()">➕ رکورد جدید اضافه کنید</button>
-            <!-- <button onclick="fetchVinylRolls()">🔄 Refresh List</button> -->
-        </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>🏠 Vinyl CRM</h2>
+        <nav>
+            <a href="./dashboard.html">داشبورد</a> <!-- Fixed duplicate index.html -->
+            <a href="./index.html" class="active">رکورد موکت ها</a>
+            <a href="./customerPage/index.html">مشتریان</a>
+            <a href="./sold/SoldRecords.html">فروشات</a>
+            <a href="#">تنظیمات</a>
+        </nav>
+    </aside>
 
-    </div>
-    
+    <!-- Main Content -->
+    <main>
+        <h1>رکوردهای موکت</h1>
 
-    <!-- Edit Vinyl Modal -->
-<div id="editVinylModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeEditVinylModal()">&times;</span>
-        <h2>ویرایش</h2>
-        
-        <label>نام موکت:</label>
-        <input type="text" id="editVinylName" required>
-
-        <label>نوع:</label>
-        <input type="text" id="editVinylType" required>
-
-        <label>رنگ:</label>
-        <input type="text" id="editVinylColor" required>
-
-        <label>متراژ-مترطول:</label>
-        <input type="number" id="editVinylLength" required>
-
-        <label>عرض:</label>
-        <input type="number" id="editVinylWidth" required>
-
-        <label>تاریخ ثبت:</label>
-        <input type="date" id="editVinylEntryDate">
-
-        <button onclick="updateVinyl()">✅ بروز رسانی</button>
-    </div>
-</div>
-
-       
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteConfirmationModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeDeleteModal()">&times;</span>
-            <h2>آیا مطمیّن هستید؟ </h2>
-            <p>آیا می خواهید رکورد را حذف کنید؟ .</p>
-            <div class="modal-buttons">
-                <button id="confirmDeleteBtn" class="danger">بلی حذف شود</button>
-                <button onclick="closeDeleteModal()" class="cancel">لغو</button>
+        <!-- Action Buttons -->
+        <div class="header-container">
+            <div class="button-container">
+                <button onclick="window.location.href='./sold/SoldRecords.html'">📜 فروشات قبلی</button>
+                <button onclick="openAddVinylModal()">➕ رکورد جدید اضافه کنید</button>
             </div>
         </div>
-    </div>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="... جستجو موکت با نوعیت و رنگ" autofocus>
-        <!-- <button onclick="filterVinyls()">Search</button> -->
-         
-    </div>
-    
-    <!-- Vinyl Rolls Table -->
-    <div class="tb">
+        <!-- Search Box -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="... جستجو موکت با نوعیت و رنگ" autofocus>
+        </div>
+
+        <!-- Statistics -->
         <div class="stats-container">
             <div class="stats-box">
                 <span class="stats-icon">📊</span>
@@ -90,55 +58,103 @@
                 <span class="stats-value" id="totalLength">0.00</span>
             </div>
         </div>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>ردیف</th>  <!-- Roll Number Column -->
-                    <th>نام موکت</th> <!-- ✅ NEW COLUMN -->
-                    <th>نوع</th>
-                    <th>رنگ</th>
-                    <th>متراژ-مترطول</th>
-                    <th>عرض</th>
-                    <th>تاریخ ثبت</th>
-                    <th>اقدام</th>
-                </tr>
-            </thead>
-            <tbody id="vinylTable">
-                <!-- Vinyl rolls will be loaded here -->
-            </tbody>
-        </table>
-    </div>
 
-    <!-- Sell Vinyl Modal -->
-    <div id="sellVinylModal" class="modal">
+        <!-- Vinyl Rolls Table -->
+        <div class="customer-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام موکت</th>
+                        <th>نوع</th>
+                        <th>رنگ</th>
+                        <th>متراژ-مترطول</th>
+                        <th>عرض</th>
+                        <th>تاریخ ثبت</th>
+                        <th>اقدام</th>
+                    </tr>
+                </thead>
+                <tbody id="vinylTable">
+                    <tr><td colspan="8">⏳ در حال بارگذاری...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Edit Vinyl Modal -->
+    <div id="editVinylModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close" onclick="closeSellVinylModal()">&times;</span>
-            <h2>فروش</h2>
-            <label>نام مشتری:</label>
-            <input type="text" id="customerName" required>
+            <span class="close" onclick="closeEditVinylModal()">&times;</span>
+            <h2>ویرایش</h2>
+            
+            <label>نام موکت:</label>
+            <input type="text" id="editVinylName" required>
 
-            <label>تاریخ فروش:</label>
-            <input type="date" id="soldDate">
+            <label>نوع:</label>
+            <input type="text" id="editVinylType" required>
 
-            <button onclick="sellVinyl()">✅ تأیید</button>
+            <label>رنگ:</label>
+            <input type="text" id="editVinylColor" required>
+
+            <label>متراژ-مترطول:</label>
+            <input type="number" id="editVinylLength" required>
+
+            <label>عرض:</label>
+            <input type="number" id="editVinylWidth" required>
+
+            <label>تاریخ ثبت:</label>
+            <input type="date" id="editVinylEntryDate">
+
+            <button onclick="updateVinyl()">✅ بروز رسانی</button>
         </div>
     </div>
 
-    <!-- ✅ Notification Modal (Top Left Corner) -->
-<div id="notification" class="notification-modal">
-    <p id="notification-message"></p>
-</div>
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteConfirmationModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeleteModal()">&times;</span>
+            <h2>آیا مطمیّن هستید؟</h2>
+            <p>آیا می خواهید رکورد را حذف کنید؟</p>
+            <div class="modal-buttons">
+                <button id="confirmDeleteBtn" class="danger">بلی حذف شود</button>
+                <button onclick="closeDeleteModal()" class="cancel">لغو</button>
+            </div>
+        </div>
+    </div>
 
-    
+    <!-- Notification Modal -->
+    <div id="notification" class="notification-modal" style="display: none;">
+        <p id="notification-message"></p>
+    </div>
+
+    <!-- فروش موکت - Sell Vinyl Modal -->
+    <div id="sellVinylModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeSellVinylModal()">&times;</span>
+            <h2>💰 فروش موکت</h2>
+
+            <label for="customerName">👤 نام مشتری:</label>
+            <input type="text" id="customerName" placeholder="نام مشتری را وارد کنید">
+
+            <label for="soldDate">📅 تاریخ فروش:</label>
+            <input type="date" id="soldDate">
+
+            <div class="modal-actions">
+                <button class="btn confirm" onclick="sellVinyl()">✅ تایید فروش</button>
+                <button class="btn cancel" onclick="closeSellVinylModal()">❌ بستن</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Add New Vinyl Modal -->
-    <div id="addVinylModal" class="modal">
+    <div id="addVinylModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="closeAddVinylModal()">&times;</span>
             <h2>اضافه کردن رکورد جدید</h2>
+            
             <label>نام موکت:</label>
             <input type="text" id="vinylName" required>
+
             <label>نوع:</label>
             <input type="text" id="vinylType" required>
             
@@ -154,16 +170,13 @@
             <label>تاریخ ثبت:</label>
             <input type="date" id="vinylEntryDate" autocomplete="off" required>
 
-
             <label>دیگر جزییات:</label>
             <textarea id="vinylDetails"></textarea>
 
             <button onclick="addVinyl()">✅ اضافه شود</button>
         </div>
-        <p class="sum">مجموعه موکت ها: </p>
     </div>
 
-    <br><br><br>
     <!-- Footer -->
     <footer>
         <p>&copy; <span id="year"></span> Vinyl Flooring Records Website. All Rights Reserved.</p>
@@ -175,7 +188,6 @@
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
     </script>
-
 
 </body>
 </html>

@@ -17,9 +17,14 @@
 }
 
 body {
-    background: var(--secondary);
+    background: var(--secondary);  /* Ensures consistency */
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    line-height: 1.6;
     display: flex;
+    flex-direction: column;
 }
+  
 
 /* 🏠 Sidebar */
 .sidebar {
@@ -46,7 +51,7 @@ body {
     margin-bottom: 8px;
     border-radius: 6px;
     transition: background 0.3s;
-    font-size: 14px;
+    /* font-size: 14px; */
 }
 
 .sidebar nav a.active, .sidebar nav a:hover {
@@ -66,7 +71,7 @@ main {
 /* 🔍 Search Box */
 .search-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     margin-bottom: 20px;
 }
@@ -128,7 +133,7 @@ th {
 }
 
 /* 📩 Footer */
-footer {
+/* footer {
     background: var(--primary);
     color: var(--white);
     text-align: center;
@@ -137,4 +142,4 @@ footer {
     position: fixed;
     bottom: 0;
     left: 220px;
-}
+} */

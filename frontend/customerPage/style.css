@@ -26,6 +26,7 @@ body {
     width: 200px;
     height: 100vh;
     padding: 20px;
+
 }
 
 .sidebar h2 {
@@ -51,6 +52,8 @@ body {
     flex: 1;
     padding: 20px;
 }
+
+
 
 /* Top Bar */
 .top-bar {
