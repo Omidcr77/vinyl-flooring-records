@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>مدیریت مشتریان موکت</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Sidebar (optional) -->
+    <aside class="sidebar">
+        <h2>🏠 Vinyl CRM</h2>
+        <nav>
+            <a href="#">داشبورد</a>
+            <a href="#" class="active">مشتریان</a>
+            <a href="../pages/SoldRecords.html">فروشات</a>
+            <a href="#">تنظیمات</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <header class="top-bar">
+            <h1>مشتریان</h1>
+            <div class="actions">
+                <input type="text" id="searchInput" placeholder="🔍 جستجو مشتری..." onkeyup="searchCustomer()">
+                <button class="add-btn">➕ افزودن مشتری</button>
+                <button class="export-btn">📤 خروجی CSV</button>
+            </div>
+        </header>
+
+        <!-- Customer Statistics -->
+        <section class="stats">
+            <div class="stat-card">
+                <h3>کل مشتریان</h3>
+                <p>1,210</p>
+            </div>
+            <div class="stat-card">
+                <h3>فعال امروز</h3>
+                <p>316</p>
+            </div>
+        </section>
+
+        <!-- Customer Table -->
+        <section class="customer-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>مشتری</th>
+                        <th>وضعیت</th>
+                        <th>ایمیل</th>
+                        <th>تاریخ خرید</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody id="customerTable">
+                    <tr>
+                        <td><img src="assets/customer.jpg" alt="Ali"> علی رضایی</td>
+                        <td><span class="status active">فعال</span></td>
+                        <td>ali@example.com</td>
+                        <td>2024-01-20</td>
+                        <td><button class="edit-btn">ویرایش</button></td>
+                    </tr>
+                    <tr>
+                        <td><img src="assets/customer.jpg" alt="Mohammad"> محمد قاسمی</td>
+                        <td><span class="status inactive">غیر فعال</span></td>
+                        <td>mohammad@example.com</td>
+                        <td>2024-01-18</td>
+                        <td><button class="edit-btn">ویرایش</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

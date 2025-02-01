@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/png" href="../favicon.png" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>رکوردهای فروشات</title>
-    <link rel="stylesheet" href="../css/styles.css"> <!-- ✅ Corrected Path -->
+    <link rel="stylesheet" href="./style.css"> 
 
     <!-- pdfmake -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
@@ -14,22 +13,29 @@
     
 </head>
 <body>
-    <h1>رکوردهای فروشات</h1>
-    <button onclick="window.location.href='http://localhost:5000'">⬅ برگشت به صفحه قلی</button>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="... جستجو موکت با نوعیت و رنگ" autofocus>
-        <!-- <button onclick="filterVinyls()">Search</button> -->
-       <!-- ✅ Download Button -->
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>🏠 Vinyl CRM</h2>
+        <nav>
+            <a href="#">داشبورد</a>
+            <a href="../customerPage/index.html">مشتریان</a>
+            <a href="#" class="active">فروشات</a>
+            <a href="#">تنظیمات</a>
+        </nav>
+    </aside>
 
-    </div>
-    <!-- <button id="downloadPdfBtn" class="pdf-download-button" disabled>📥 Download PDF</button> -->
+    <!-- Main Content -->
+    <main>
+        <h1>رکوردهای فروشات</h1>
+        <!-- <button onclick="window.location.href='http://localhost:5000'">⬅  صفحه رکورد ها</button> -->
 
-    
-    </div>
+        <!-- Search Box -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="... جستجو موکت با نوعیت و رنگ" autofocus>
+        </div>
 
-    <table>
-
+        <!-- 📊 Statistics Box (✅ Moved Above Table) -->
         <div class="stats-container">
             <div class="stats-box">
                 <span class="stats-icon">📊</span>
@@ -43,29 +49,34 @@
             </div>
         </div>
 
-        <thead>
-            <tr>
-                <th>نام مشتری</th>
-                <th>ردیف</th>
-                <th>نام موکت</th> <!-- ✅ NEW COLUMN -->
-                <th>نوع</th>
-                <th>رنگ</th>
-                <th>متراژ-مترطول</th>
-                <th>عرض</th>
-                <th>تاریخ ثبت</th>
-                <th>تاریخ فروش</th>
-            </tr>
-        </thead>
-        <tbody id="soldRecordsTable"></tbody>
-    </table>
+        <!-- 📋 Sold Records Table (✅ Now Positioned Correctly) -->
+        <div class="customer-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ردیف</th>
+                        <th>نام مشتری</th>
+                        <th>نام موکت</th>
+                        <th>نوع</th>
+                        <th>رنگ</th>
+                        <th>متراژ-مترطول</th>
+                        <th>عرض</th>
+                        <th>تاریخ ثبت</th>
+                        <th>تاریخ فروش</th>
+                    </tr>
+                </thead>
+                <tbody id="soldRecordsTable"></tbody>
+            </table>
+        </div>
 
+    </main>
 
-      <!-- Footer -->
-      <footer>
+    <!-- Footer -->
+    <footer>
         <p>&copy; <span id="year"></span> Vinyl Flooring Records Website. All Rights Reserved.</p>
     </footer>
 
-    <!-- ✅ Added Socket.io -->
+    <!-- ✅ Socket.io -->
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="../js/soldRecords.js"></script>
 </body>
