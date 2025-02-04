@@ -56,15 +56,8 @@ async function fetchVinylRolls(searchQuery = "") {
                 <td>${roll.width}</td>
                 <td>${new Date(roll.entryDate).toLocaleDateString()}</td>
                 <td>
-                    <div class="dropdown">
-                        <button class="dropbtn" onclick="toggleDropdown(event, 'dropdown-${roll._id}')">⚙️ اقدام</button>
-                        <div class="dropdown-content" id="dropdown-${roll._id}">
-                            <a href="#" onclick="openSellVinylModal('${roll._id}')">💰 فروش</a>
-                            <a href="#" onclick="openEditVinylModal('${roll._id}')">✏️ ویرایش</a>
-                            <a href="#" onclick="openDeleteModal('${roll._id}')">❌ حذف</a>
-                        </div>
-                    </div>
-                </td>`;
+                     <button onclick="openContextMenu(event, '${roll._id}')">⚙️ اقدام</button>
+                 </td>`;
 
             tableBody.appendChild(row);
         });
@@ -91,24 +84,50 @@ function filterVinyls() {
     fetchVinylRolls(searchValue);
 }
 
-// Function to toggle dropdown visibility
-function toggleDropdown(event, id) {
-    event.stopPropagation();
-    let dropdown = document.getElementById(id);
-
-    document.querySelectorAll('.dropdown-content').forEach(menu => {
-        if (menu !== dropdown) menu.classList.remove("show"); 
-    });
-
-    dropdown.classList.toggle("show");
-}
-
-// Close dropdown when clicking outside
-document.addEventListener("click", function () {
-    document.querySelectorAll('.dropdown-content').forEach(menu => {
-        menu.classList.remove("show");
+// new func()
+document.addEventListener("DOMContentLoaded", function () {
+    // Close menu when clicking outside
+    document.addEventListener("click", function (event) {
+        let menu = document.getElementById("contextMenu");
+        if (menu) menu.style.display = "none";
     });
 });
+
+function openContextMenu(event, vinylId) {
+    event.preventDefault(); // Stop the default click behavior
+    event.stopPropagation(); // Stop event from closing instantly
+
+    let menu = document.getElementById("contextMenu");
+
+    // If the menu doesn't exist, create it
+    if (!menu) {
+        menu = document.createElement("div");
+        menu.id = "contextMenu";
+        menu.classList.add("context-menu");
+        document.body.appendChild(menu);
+    }
+
+    // Add action buttons
+    menu.innerHTML = `
+        <a href="#" onclick="openSellVinylModal('${vinylId}')">💰 فروش</a>
+        <a href="#" onclick="openEditVinylModal('${vinylId}')">✏️ ویرایش</a>
+        <a href="#" onclick="openDeleteModal('${vinylId}')">❌ حذف</a>
+    `;
+
+    // Position the menu next to the click
+    menu.style.top = `${event.clientY}px`;
+    menu.style.left = `${event.clientX}px`;
+    menu.style.display = "block";
+}
+
+
+// Close dropdown when clicking outside
+document.addEventListener("click", function(event) {
+    document.querySelectorAll(".dropdown-content").forEach(menu => {
+        menu.classList.remove("show", "upward");
+    });
+});
+
 
 // Prevent dropdown from closing when clicking inside
 document.querySelectorAll('.dropdown-content').forEach(menu => {
@@ -167,7 +186,7 @@ document.getElementById("searchInput").addEventListener("keydown", (event) => {
 
 // Open and Close Add Vinyl Modal
 function openAddVinylModal() { 
-    closeAllModals(); // Ensure other modals are closed before opening a new one
+    // closeAllModals(); // Ensure other modals are closed before opening a new one
     document.getElementById("addVinylModal").style.display = "block"; }
 function closeAddVinylModal() { document.getElementById("addVinylModal").style.display = "none"; }
 

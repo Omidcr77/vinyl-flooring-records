@@ -20,7 +20,7 @@
     <aside class="sidebar">
         <h2>🏠 Vinyl CRM</h2>
         <nav>
-            <a href="./dashboard.html">داشبورد</a> <!-- Fixed duplicate index.html -->
+            <a href="./dashboard/index.html">داشبورد</a> <!-- Fixed duplicate index.html -->
             <a href="./index.html" class="active">رکورد موکت ها</a>
             <a href="./customerPage/index.html">مشتریان</a>
             <a href="./sold/SoldRecords.html">فروشات</a>
@@ -82,32 +82,37 @@
     </main>
 
     <!-- Edit Vinyl Modal -->
-    <div id="editVinylModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close" onclick="closeEditVinylModal()">&times;</span>
-            <h2>ویرایش</h2>
-            
-            <label>نام موکت:</label>
-            <input type="text" id="editVinylName" required>
+<div id="editVinylModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditVinylModal()">&times;</span>
+        <h2>ویرایش</h2>
+        
+        <label>نام موکت:</label>
+        <input type="text" id="editVinylName" required>
 
-            <label>نوع:</label>
-            <input type="text" id="editVinylType" required>
+        <label>نوع:</label>
+        <input type="text" id="editVinylType" required>
 
-            <label>رنگ:</label>
-            <input type="text" id="editVinylColor" required>
+        <label>رنگ:</label>
+        <input type="text" id="editVinylColor" required>
 
-            <label>متراژ-مترطول:</label>
-            <input type="number" id="editVinylLength" required>
+        <label>متراژ-مترطول:</label>
+        <input type="number" id="editVinylLength" required>
 
-            <label>عرض:</label>
-            <input type="number" id="editVinylWidth" required>
+        <label>عرض:</label>
+        <input type="number" id="editVinylWidth" required>
 
-            <label>تاریخ ثبت:</label>
-            <input type="date" id="editVinylEntryDate">
+        <label>تاریخ ثبت:</label>
+        <input type="date" id="editVinylEntryDate">
 
-            <button onclick="updateVinyl()">✅ بروز رسانی</button>
+        <!-- Buttons -->
+        <div class="modal-actions">
+            <button class="btn confirm" onclick="updateVinyl()">✅ بروز رسانی</button>
+            <button class="btn cancel" onclick="closeEditVinylModal()">❌ لغو</button>
         </div>
     </div>
+</div>
+
 
     <!-- Delete Confirmation Modal -->
     <div id="deleteConfirmationModal" class="modal" style="display: none;">
@@ -141,13 +146,13 @@
 
             <div class="modal-actions">
                 <button class="btn confirm" onclick="sellVinyl()">✅ تایید فروش</button>
-                <button class="btn cancel" onclick="closeSellVinylModal()">❌ بستن</button>
+                <button class="btn cancel" onclick="closeSellVinylModal()">❌ لغو</button>
             </div>
         </div>
     </div>
 
-    <!-- Add New Vinyl Modal -->
-    <div id="addVinylModal" class="modal" style="display: none;">
+     <!-- Add New Vinyl Modal -->
+     <div id="addVinylModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeAddVinylModal()">&times;</span>
             <h2>اضافه کردن رکورد جدید</h2>
@@ -157,7 +162,7 @@
 
             <label>نوع:</label>
             <input type="text" id="vinylType" required>
-            
+
             <label>رنگ:</label>
             <input type="text" id="vinylColor" required>
 
@@ -173,7 +178,10 @@
             <label>دیگر جزییات:</label>
             <textarea id="vinylDetails"></textarea>
 
-            <button onclick="addVinyl()">✅ اضافه شود</button>
+            <div class="modal-actions">
+                <button class="btn confirm" onclick="addVinyl()">✅ اضافه شود</button>
+                <button class="btn cancel" onclick="closeAddVinylModal()">❌ لغو</button>
+            </div>
         </div>
     </div>
 

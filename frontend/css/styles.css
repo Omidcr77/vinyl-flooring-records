@@ -31,7 +31,7 @@ body {
     height: 100vh;
     padding: 20px;
     position: fixed;
-}
+} 
 
 .sidebar h2 {
     margin-bottom: 20px;
@@ -123,14 +123,24 @@ th {
     color: var(--white);
 }
 
+.button-container {
+    position: absolute;
+    /* bottom: 10px; */
+    right: 500px;
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+
 /* 🛠 Action Buttons */
 button {
-    padding: 10px 12px;
-    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
     cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.3s;
-    font-size: 14px;
+    border: none;
+    background-color: #102a47; /* Blue color */
+    color: white;
+    border-radius: 5px;
 }
 
 button:hover {
@@ -139,29 +149,36 @@ button:hover {
 }
 
 /* ✅ Modal Styles */
+/* 🎯 Centering Modals */
+/* 🎯 Modal Styles */
 .modal {
-    display: none; /* Hide modals by default */
+    display: none;
     position: fixed;
     z-index: 1000;
-    left: 0;
-    top: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Transparent Dark Background */
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .modal-content {
     background: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
-    width: 350px;
+    width: 400px; /* Adjust as needed */
+    max-width: 90%; /* Ensures responsiveness */
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
-    direction: rtl; /* ✅ Right-to-Left for Persian */
+    direction: rtl; /* Keep right-to-left text alignment */
+    margin: auto; /* Ensures center alignment */
 }
+
 
 .modal h2 {
     margin-bottom: 15px;
@@ -172,18 +189,19 @@ button:hover {
     display: block;
     margin-top: 10px;
     font-weight: bold;
+    text-align: right;
 }
 
-.modal input {
+.modal input, .modal textarea {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
-    border: 1px solid var(--primary);
+    border: 1px solid #ccc;
     border-radius: 5px;
     text-align: right;
 }
 
-/* 🔘 Modal Buttons */
+/* 🔘 Buttons inside Modal */
 .modal-actions {
     margin-top: 20px;
     display: flex;
@@ -191,17 +209,24 @@ button:hover {
     gap: 10px;
 }
 
-.modal-actions .btn {
+.btn {
     flex: 1;
     padding: 10px;
     font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    transition: background 0.3s ease;
 }
 
+/* ✅ Confirm Button */
 .btn.confirm {
-    background-color: #28a745;
+    background-color: #1b5eb0;
     color: white;
 }
 
+/* ❌ Cancel Button */
 .btn.cancel {
     background-color: #dc3545;
     color: white;
@@ -216,11 +241,12 @@ button:hover {
     cursor: pointer;
 }
 
-/* 🔴 Delete Confirmation */
+/* 🔴 Delete Button */
 .modal .danger {
     background: red;
     color: var(--white);
 }
+
 .modal .danger:hover {
     background: darkred !important;
 }
@@ -233,6 +259,7 @@ button:hover {
 
 .modal .cancel:hover {
     background: var(--white);
+    border: 1px solid var(--text);
 }
 
 /* ✅ Notification Modal */
@@ -242,12 +269,24 @@ button:hover {
     left: 20px;
     background: var(--accent);
     color: var(--white);
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px 16px;
+    border-radius: 6px;
     display: none;
     z-index: 2000;
+    font-size: 14px;
+    font-weight: bold;
 }
 
+/* 🎯 Center Buttons in Smaller Screens */
+@media (max-width: 600px) {
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions .btn {
+        width: 100%;
+    }
+}
 /* 📩 Footer */
 footer {
     background: var(--primary);
@@ -258,52 +297,30 @@ footer {
     position: relative; /* ✅ Fix: Prevent overlap */
 }
 
-/* 🎯 Dropdown Menu */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
 
-.dropbtn {
-    background: var(--primary);
-    color: var(--white);
-    padding: 8px 12px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
 
-.dropbtn:hover {
-    background: var(--accent);
-}
-
-.dropdown-content {
-    display: none;
+.context-menu {
     position: absolute;
-    background-color: var(--white);
-    box-shadow: 0px 2px 10px var(--shadow);
-    border-radius: 5px;
-    min-width: 120px;
+    background: var(--white);
+    border-radius: 6px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    display: none;
     z-index: 1000;
-    right: 0; /* Aligns dropdown to the right */
-    text-align: right;
+    min-width: 140px;
 }
 
-.dropdown-content a {
-    color: var(--text);
-    padding: 8px 10px;
+.context-menu a {
     display: block;
+    padding: 8px 12px;
     text-decoration: none;
+    color: var(--text);
     font-size: 14px;
+    border-radius: 4px;
+    transition: background 0.2s;
 }
 
-.dropdown-content a:hover {
-    background-color: var(--secondary);
-}
-
-/* Show dropdown when clicked */
-.dropdown-content.show {
-    display: block;
+.context-menu a:hover {
+    background: #253dd9;
+    color: #ffffff;
 }
