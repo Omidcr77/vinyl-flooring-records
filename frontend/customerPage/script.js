@@ -1,10 +1,10 @@
-/// Sample customer data
+// Sample customer data
 const customers = [
     { 
         id: 1,
         name: "علی رضایی", 
         phone: "09123456789", 
-        balance: 200000, 
+        balance: 200000,  // Stored in تومان
         img: "assets/customer.jpg", 
         purchaseDate: "2024-01-20",
         vinyls: [
@@ -20,7 +20,7 @@ const customers = [
         id: 2,
         name: "محمد قاسمی", 
         phone: "09234567890", 
-        balance: 50000, 
+        balance: 50000,  // Stored in تومان
         img: "assets/customer.jpg", 
         purchaseDate: "2024-01-18",
         vinyls: [
@@ -32,12 +32,33 @@ const customers = [
     }
 ];
 
+// Update statistics (total customers and balance in USD)
+function updateStatistics() {
+    let totalCustomers = customers.length;
+    
+    // Convert total balance to USD (1 USD = 50,000 تومان)
+    let totalBalanceToman = customers.reduce((sum, customer) => sum + customer.balance, 0);
+    let totalBalanceUSD = (totalBalanceToman / 50000).toFixed(2); 
+
+    // Ensure the elements exist before updating them
+    if (document.getElementById("totalCustomers")) {
+        document.getElementById("totalCustomers").textContent = totalCustomers;
+    }
+    if (document.getElementById("totalBalance")) {
+        document.getElementById("totalBalance").textContent = `${totalBalanceUSD} دالر`;
+    }
+}
+
 // Load customers into the grid
 function loadCustomers() {
     let customerGrid = document.getElementById("customerGrid");
-    customerGrid.innerHTML = "";
+    if (!customerGrid) return;
     
+    customerGrid.innerHTML = "";
+
     customers.forEach(customer => {
+        let balanceUSD = (customer.balance / 50000).toFixed(2); // Convert to USD
+
         let card = document.createElement("div");
         card.className = "customer-card";
         card.setAttribute("data-id", customer.id);
@@ -45,7 +66,7 @@ function loadCustomers() {
             <img src="${customer.img}" alt="${customer.name}">
             <h3>${customer.name}</h3>
             <p><strong>شماره تلفون:</strong> ${customer.phone}</p>
-            <p><strong>حساب:</strong> ${customer.balance.toLocaleString()} دالر</p>
+            <p><strong>حساب:</strong> ${balanceUSD} دالر</p>
         `;
         
         card.addEventListener("click", () => {
@@ -55,9 +76,12 @@ function loadCustomers() {
 
         customerGrid.appendChild(card);
     });
+
+    // Update stats after loading customers
+    updateStatistics();
 }
 
-// Load customers on page load
+// Load customers and update stats on page load
 document.addEventListener("DOMContentLoaded", loadCustomers);
 
 // Search Customers
@@ -70,6 +94,3 @@ function searchCustomer() {
         card.style.display = name.includes(input) ? "block" : "none";
     });
 }
-
-// Load customers on page load
-document.addEventListener("DOMContentLoaded", loadCustomers);
