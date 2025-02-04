@@ -26,7 +26,6 @@ body {
     width: 200px;
     height: 100vh;
     padding: 20px;
-
 }
 
 .sidebar h2 {
@@ -52,8 +51,6 @@ body {
     flex: 1;
     padding: 20px;
 }
-
-
 
 /* Top Bar */
 .top-bar {
@@ -107,42 +104,37 @@ input[type="text"] {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Table */
-.customer-table table {
-    width: 100%;
-    border-collapse: collapse;
+/* Customer Grid */
+.customer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.customer-card {
     background: white;
+    padding: 15px;
     border-radius: 8px;
-    overflow: hidden;
-}
-
-th, td {
-    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px;
     text-align: center;
-    border-bottom: 1px solid var(--secondary);
 }
 
-th {
-    background: var(--primary);
-    color: white;
+.customer-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
 }
 
-/* Status Badges */
-.status {
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
+.customer-card h3 {
+    margin: 10px 0;
 }
 
-.status.active {
-    background: green;
+.customer-card p {
+    margin: 5px 0;
+    font-size: 14px;
 }
 
-.status.inactive {
-    background: red;
-}
-
-/* Edit Button */
 .edit-btn {
     padding: 5px 10px;
     border: none;

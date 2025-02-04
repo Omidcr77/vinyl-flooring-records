@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- Sidebar (optional) -->
+    <!-- Sidebar -->
     <aside class="sidebar">
         <h2>🏠 Vinyl CRM</h2>
         <nav>
@@ -36,43 +36,17 @@
         <section class="stats">
             <div class="stat-card">
                 <h3>کل مشتریان</h3>
-                <p>1,210</p>
+                <p id="totalCustomers">0</p>
             </div>
             <div class="stat-card">
-                <h3>فعال امروز</h3>
-                <p>316</p>
+                <h3>حساب‌های باقی‌مانده</h3>
+                <p id="totalBalance">0 دالر</p>
             </div>
         </section>
 
-        <!-- Customer Table -->
-        <section class="customer-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>مشتری</th>
-                        <th>وضعیت</th>
-                        <th>ایمیل</th>
-                        <th>تاریخ خرید</th>
-                        <th>عملیات</th>
-                    </tr>
-                </thead>
-                <tbody id="customerTable">
-                    <tr>
-                        <td><img src="assets/customer.jpg" alt="Ali"> علی رضایی</td>
-                        <td><span class="status active">فعال</span></td>
-                        <td>ali@example.com</td>
-                        <td>2024-01-20</td>
-                        <td><button class="edit-btn">ویرایش</button></td>
-                    </tr>
-                    <tr>
-                        <td><img src="assets/customer.jpg" alt="Mohammad"> محمد قاسمی</td>
-                        <td><span class="status inactive">غیر فعال</span></td>
-                        <td>mohammad@example.com</td>
-                        <td>2024-01-18</td>
-                        <td><button class="edit-btn">ویرایش</button></td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Customer Cards -->
+        <section class="customer-grid" id="customerGrid">
+            <!-- Customers will be loaded here dynamically -->
         </section>
     </main>
 

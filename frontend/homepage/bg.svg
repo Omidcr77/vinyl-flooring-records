@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- A radial gradient from dark blue to bright blue -->
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#2c3e50"/>
+      <stop offset="100%" stop-color="#3498db"/>
+    </radialGradient>
+  </defs>
+  <!-- Background fill -->
+  <rect width="1920" height="1080" fill="url(#bgGradient)"/>
+  <!-- Concentric circles for a vinyl-inspired look -->
+  <circle cx="960" cy="540" r="300" fill="none" stroke="#ecf0f1" stroke-width="2" stroke-dasharray="10,5"/>
+  <circle cx="960" cy="540" r="200" fill="none" stroke="#ecf0f1" stroke-width="2" stroke-dasharray="10,5"/>
+</svg>
