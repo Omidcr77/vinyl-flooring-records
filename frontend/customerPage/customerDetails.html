@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>جزئیات مشتری</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <main class="details-container">
+        <button class="back-btn" onclick="window.history.back()">🔙 بازگشت</button>
+
+        <!-- Profile Banner -->
+        <section class="profile-banner">
+            <img src="" alt="Profile Picture" class="profile-img" id="profileImg">
+            <h2 id="customerName"></h2>
+            <p class="account-balance" id="customerBalance"></p>
+        </section>
+
+        <!-- Customer Details -->
+        <section class="info-section">
+            <h3>📞 اطلاعات تماس</h3>
+            <p id="customerPhone"></p>
+        </section>
+
+        <!-- Vinyl Purchases -->
+        <section class="info-section">
+            <h3>🛒 لیست خریداری شده Vinyl</h3>
+            <ul id="vinylList"></ul>
+        </section>
+
+        <!-- Receipts -->
+        <section class="info-section">
+            <h3>📜 لیست رسیدات</h3>
+            <ul id="receiptList"></ul>
+        </section>
+    </main>
+
+    <script src="customerDetails.js"></script>
+
+</body>
+</html>

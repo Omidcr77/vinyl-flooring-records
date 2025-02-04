@@ -1,0 +1,109 @@
+body {
+    background-image: url('../img/bg2.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Customer Details Container */
+.details-container {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Back Button */
+.back-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    width: 120px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: #152375;
+}
+
+/* Profile Banner */
+.profile-banner {
+    background: linear-gradient(120deg, #3498db, #2980b9);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Profile Image */
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 10px;
+    border: 3px solid white;
+}
+
+/* Customer Name */
+h2 {
+    margin: 10px 0;
+    font-size: 24px;
+}
+
+/* Account Balance */
+.account-balance {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Section Header */
+h3 {
+    margin-top: 20px;
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 5px;
+}
+
+/* List Containers */
+.info-section {
+    background: #f7f9fc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: left;
+}
+
+/* Lists */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .details-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .profile-img {
+        width: 80px;
+        height: 80px;
+    }
+}
