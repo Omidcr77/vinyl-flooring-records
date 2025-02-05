@@ -144,4 +144,119 @@ input[type="text"] {
     cursor: pointer;
 }
 
+/* Fix Modal Default State */
+.modal {
+    display: none;  /* Ensure modals are hidden initially */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
 
+/* Fix Modal Visibility */
+.modal.visible {
+    display: flex; /* Only show when explicitly triggered */
+}
+
+/* Modal Content */
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 420px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #888;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+/* Modal Title */
+.modal h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+/* Modal Form Layout */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Labels */
+.modal-form label {
+    font-weight: bold;
+    color: #2c3e50;
+    display: block;
+    text-align: left;
+    width: 100%;
+}
+
+/* Form Inputs */
+.modal input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+    outline: none;
+    text-align: center;
+}
+
+/* Focus Effect */
+.modal input:focus {
+    border-color: #3498db;
+    box-shadow: 0px 0px 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Modal Buttons */
+.modal button {
+    background: #3498db;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.modal button:hover {
+    background: #2980b9;
+}
+
+/* Smooth Modal Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

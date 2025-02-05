@@ -1,13 +1,18 @@
+/* Global Styling */
 body {
     background-image: url('../img/bg2.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
 /* Customer Details Container */
 .details-container {
-    max-width: 700px;
+    max-width: 750px;
     margin: 50px auto;
     padding: 25px;
     background: white;
@@ -27,6 +32,8 @@ body {
     margin-bottom: 15px;
     width: 120px;
     transition: 0.3s;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .back-btn:hover {
@@ -37,15 +44,16 @@ body {
 .profile-banner {
     background: linear-gradient(120deg, #3498db, #2980b9);
     color: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Profile Image */
 .profile-img {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     margin-top: 10px;
     border: 3px solid white;
@@ -54,7 +62,8 @@ body {
 /* Customer Name */
 h2 {
     margin: 10px 0;
-    font-size: 24px;
+    font-size: 26px;
+    font-weight: bold;
 }
 
 /* Account Balance */
@@ -67,8 +76,8 @@ h2 {
 /* Section Header */
 h3 {
     margin-top: 20px;
-    color: var(--primary);
-    border-bottom: 2px solid var(--accent);
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
     padding-bottom: 5px;
 }
 
@@ -79,6 +88,7 @@ h3 {
     border-radius: 8px;
     margin-top: 10px;
     text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Lists */
@@ -89,10 +99,58 @@ ul {
 
 ul li {
     background: white;
-    padding: 10px;
-    margin: 5px 0;
+    padding: 12px;
+    margin: 6px 0;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #3498db;
+    color: white;
+}
+
+td {
+    background: white;
+}
+
+/* Buttons */
+button {
+    background: #3498db;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+.open-modal-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
 }
 
 /* Responsive Design */
@@ -103,7 +161,147 @@ ul li {
     }
 
     .profile-img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
     }
+}
+
+/* ============================= */
+/* Modal Styling */
+/* ============================= */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Content Box */
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 420px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    font-size: 22px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #888;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+/* Modal Title */
+.modal h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+/* Modal Form Layout */
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Labels */
+.modal-form label {
+    font-weight: bold;
+    color: #2c3e50;
+    display: block;
+    text-align: left;
+    width: 100%;
+}
+
+/* Form Inputs */
+.modal input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s;
+    outline: none;
+    text-align: center;
+}
+
+/* Focus Effect */
+.modal input:focus {
+    border-color: #3498db;
+    box-shadow: 0px 0px 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Modal Buttons */
+.modal button {
+    background: #3498db;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.modal button:hover {
+    background: #2980b9;
+}
+
+/* Animation for Modals */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Centered Inputs */
+.input-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.input-group input {
+    flex: 1;
+}
+
+/* Icon Buttons */
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.icon-btn i {
+    font-size: 18px;
 }

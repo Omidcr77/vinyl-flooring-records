@@ -24,18 +24,78 @@
             <p id="customerPhone"></p>
         </section>
 
-        <!-- Vinyl Purchases -->
+        <!-- Vinyl Purchases Table -->
         <section class="info-section">
-            <h3>🛒 لیست خریداری شده Vinyl</h3>
-            <ul id="vinylList"></ul>
+            <h3>🛒 لیست خریداری شده موکت</h3>
+            <table id="vinylTable">
+                <thead>
+                    <tr>
+                        <th>نام موکت</th>
+                        <th>نوع</th>
+                        <th>رنگ</th>
+                        <th>متراژ-مترطول</th>
+                        <th>عرض</th>
+                        <th>تاریخ ثبت</th>
+                        <th>اقدام</th>
+                    </tr>
+                </thead>
+                <tbody id="vinylList"></tbody>
+            </table>
         </section>
 
-        <!-- Receipts -->
+        <!-- Receipts Section -->
         <section class="info-section">
             <h3>📜 لیست رسیدات</h3>
+            <button class="open-modal-btn" onclick="openModal('receiptModal')">➕ افزودن رسید</button>
             <ul id="receiptList"></ul>
         </section>
+
+        <!-- Add New Balance Section -->
+        <section class="info-section">
+            <h3>💰 حساب جدید</h3>
+            <button class="open-modal-btn" onclick="openModal('balanceModal')">➕ افزودن موجودی</button>
+        </section>
     </main>
+
+    <!-- Add Receipt Modal -->
+    <div id="receiptModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('receiptModal')">&times;</span>
+            <h3>📜 افزودن رسید</h3>
+            <div class="modal-form">
+                <label for="receiptDate">📅 تاریخ</label>
+                <input type="date" id="receiptDate" required>
+                
+                <label for="receiptAmount">💰 مبلغ (دالر)</label>
+                <input type="number" id="receiptAmount" placeholder="مبلغ (دالر)" required>
+                
+                <label for="receiptDetails">📝 توضیحات</label>
+                <input type="text" id="receiptDetails" placeholder="توضیحات">
+                
+                <button onclick="addReceipt()">✅ ثبت رسید</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Balance Modal -->
+    <div id="balanceModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('balanceModal')">&times;</span>
+            <h3>💰 افزودن موجودی</h3>
+            <div class="modal-form">
+                <label for="balanceAmount">💵 مبلغ (دالر)</label>
+                <input type="number" id="balanceAmount" placeholder="مبلغ (دالر)" required>
+                
+                <label for="billNumber">📄 شماره فاکتور</label>
+                <input type="text" id="billNumber" placeholder="شماره فاکتور" required>
+                
+                <label for="purchaseDate">📅 تاریخ خرید</label>
+                <input type="date" id="purchaseDate" required>
+                
+                <button onclick="addBalance()">✅ ثبت موجودی</button>
+            </div>
+        </div>
+    </div>
 
     <script src="customerDetails.js"></script>
 
