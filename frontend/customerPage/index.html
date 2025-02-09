@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
+    <link rel="icon" type="image/png" href="../favicon.png" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>مدیریت مشتریان موکت</title>
@@ -28,6 +29,7 @@
             <div class="actions">
                 <input type="text" id="searchInput" placeholder="🔍 جستجو مشتری..." onkeyup="searchCustomer()">
                 <button class="add-btn" onclick="openModal('addCustomerModal')">➕ افزودن مشتری</button>
+                <button class="delete-btn" onclick="deleteSelectedCustomer()">🗑️ حذف مشتری</button>
                 <button class="export-btn">📤 خروجی CSV</button>
             </div>
         </header>
@@ -50,28 +52,36 @@
         </section>
     </main>
 
+    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
 
-
     <!-- Add Customer Modal -->
-<div id="addCustomerModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal('addCustomerModal')">&times;</span>
-        <h3>🆕 افزودن مشتری</h3>
-        <div class="modal-form">
-            <label for="customerName">👤 نام مشتری</label>
-            <input type="text" id="customerName" placeholder="نام مشتری" required>
+    <div id="addCustomerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('addCustomerModal')">&times;</span>
+            <h3>🆕 افزودن مشتری</h3>
+            <div class="modal-form">
+                <label for="customerPic">Upload Profile Picture:</label>
+                <input type="file" id="customerPic" accept="image/*">
+                <!-- ✅ Remove direct upload button, upload happens after creating the customer -->
+                <img id="profileImg" src="assets/user.png" alt="Profile Preview" class="profile-image">
+                
+                <label for="customerName">👤 نام مشتری</label>
+                <input type="text" id="customerName" placeholder="نام مشتری" required>
 
-            <label for="customerPhone">📞 شماره تلفون</label>
-            <input type="text" id="customerPhone" placeholder="شماره تلفون" required>
+                <label for="customerPhone">📞 شماره تلفون</label>
+                <input type="text" id="customerPhone" placeholder="شماره تلفون" required>
 
-            <label for="customerBalance">💰 حساب باقی‌مانده (دالر)</label>
-            <input type="number" id="customerBalance" placeholder="مبلغ به دالر" required>
+                <label for="customerAddress">📍 آدرس</label>
+                <input type="text" id="customerAddress" placeholder="آدرس مشتری" required>
 
-            <button onclick="addCustomer()">✅ ثبت مشتری</button>
+                <label for="customerBalance">💰 حساب باقی‌مانده (دالر)</label>
+                <input type="number" id="customerBalance" placeholder="مبلغ به دالر" required>
+
+                <button onclick="addCustomer()">✅ ثبت مشتری</button>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>

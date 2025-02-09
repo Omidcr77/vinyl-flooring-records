@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>جزئیات مشتری</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="../favicon.png" />
 </head>
 <body>
 
@@ -22,25 +23,25 @@
         <section class="info-section">
             <h3>📞 اطلاعات تماس</h3>
             <p id="customerPhone"></p>
+
+            <h3>📍 آدرس مشتری</h3>
+            <p id="customerAddress"></p>
         </section>
 
         <!-- Vinyl Purchases Table -->
         <section class="info-section">
-            <h3>🛒 لیست خریداری شده موکت</h3>
-            <table id="vinylTable">
-                <thead>
-                    <tr>
-                        <th>نام موکت</th>
-                        <th>نوع</th>
-                        <th>رنگ</th>
-                        <th>متراژ-مترطول</th>
-                        <th>عرض</th>
-                        <th>تاریخ ثبت</th>
-                        <th>اقدام</th>
-                    </tr>
-                </thead>
-                <tbody id="vinylList"></tbody>
-            </table>
+            <h3>📜 لیست خریداری شده</h3>
+<table id="vinylTable">
+    <thead>
+        <tr>
+            <th>شماره بل</th>
+            <th>تاریخ</th>
+            <th>مجموع</th>
+        </tr>
+    </thead>
+    <tbody id="vinylList"></tbody>
+</table>
+
         </section>
 
         <!-- Receipts Section -->
@@ -58,7 +59,7 @@
     </main>
 
     <!-- Add Receipt Modal -->
-    <div id="receiptModal" class="modal">
+    <div id="receiptModal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('receiptModal')">&times;</span>
             <h3>📜 افزودن رسید</h3>
@@ -78,7 +79,7 @@
     </div>
 
     <!-- Add Balance Modal -->
-    <div id="balanceModal" class="modal">
+    <div id="balanceModal" class="modal hidden">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal('balanceModal')">&times;</span>
             <h3>💰 افزودن موجودی</h3>
@@ -86,13 +87,13 @@
                 <label for="balanceAmount">💵 مبلغ (دالر)</label>
                 <input type="number" id="balanceAmount" placeholder="مبلغ (دالر)" required>
                 
-                <label for="billNumber">📄 شماره فاکتور</label>
+                <label for="billNumber">📄 شماره بل</label>
                 <input type="text" id="billNumber" placeholder="شماره فاکتور" required>
                 
                 <label for="purchaseDate">📅 تاریخ خرید</label>
                 <input type="date" id="purchaseDate" required>
                 
-                <button onclick="addBalance()">✅ ثبت موجودی</button>
+                <button onclick="addPurchase()">✅ ثبت موجودی</button>
             </div>
         </div>
     </div>
