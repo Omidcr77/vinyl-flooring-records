@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Customer = require("../models/Customer");
 
-// ✅ Get Customer Details by ID
+// ✅ Get a single customer by ID
 router.get("/:id", async (req, res) => {
     try {
         const customer = await Customer.findById(req.params.id);
@@ -12,6 +12,7 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 // ✅ Add a Receipt (Subtract from Balance)
 router.post("/:id/receipts", async (req, res) => {

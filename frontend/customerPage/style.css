@@ -112,41 +112,184 @@ input[type="text"] {
     text-align: center;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
-/* Customer Grid */
+/* Customer Grid Layout */
 .customer-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center; /* Center cards properly */
+    gap: 25px;
+    justify-content: center;
 }
 
 /* Customer Card */
 .customer-card {
     background: white;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 250px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    width: 270px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
 }
 
 .customer-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-.customer-card img {
+/* Customer Header */
+.customer-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+/* Profile Image */
+.customer-avatar {
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent);
 }
 
-.customer-card h3 {
+/* Customer Name */
+.customer-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.3s ease-in-out;
+}
+
+.customer-name:hover {
+    color: #0056b3;
+}
+
+/* Customer Details */
+.customer-body p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #444;
+}
+
+/* Three-dot menu */
+.menu-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.menu-btn:hover {
+    color: #333;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 10;
+    min-width: 120px;
+    text-align: left;
+}
+
+.dropdown-menu button {
+    background: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    transition: background 0.3s;
+}
+
+.dropdown-menu button:hover {
+    background: #f5f5f5;
+}
+
+/* Style for delete confirmation modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.close-btn {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.delete-confirm-btn {
+    background: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: gray;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* Style customer names as clickable links */
+.customer-link {
+    display: block;
+    font-size: 20px; /* Increase font size */
+    font-weight: bold;
+    color: #007bff; /* Blue color for visibility */
+    text-decoration: none; /* Remove underline */
     margin: 10px 0;
+    transition: color 0.3s ease-in-out;
 }
 
+/* Hover effect for customer name */
+.customer-link:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
 .customer-card p {
     margin: 5px 0;
     font-size: 14px;

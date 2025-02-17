@@ -1,4 +1,4 @@
-const API_URL = `http://localhost:5000/api/customers`;
+const API_URL = `http://localhost:5000/api/customerDetails`; // Use backticks
 
 // ✅ Get customer ID from URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -17,8 +17,10 @@ async function loadCustomerDetails() {
 
         const customer = await response.json();
 
-        document.getElementById("profileImg").src = customer.img || "assets/user.png";
-        document.getElementById("customerName").textContent = customer.name;
+        document.getElementById("profileImg").src = customer.img 
+        ? `http://localhost:5000/uploads/${customer.img}` 
+        : "assets/user.png";
+            document.getElementById("customerName").textContent = customer.name;
         document.getElementById("customerBalance").textContent = `💰 Balance: ${customer.balance.toLocaleString()} USD`;
         document.getElementById("customerPhone").textContent = customer.phone;
         document.getElementById("customerAddress").textContent = customer.address;
@@ -213,6 +215,68 @@ document.addEventListener("keydown", function(event) {
         });
     }
 });
+
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const customerId = urlParams.get("id");
+
+    if (!customerId) {
+        alert("❌ مشتری یافت نشد!");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:5000/api/customers/${customerId}`);
+        if (!response.ok) throw new Error("❌ دریافت اطلاعات مشتری انجام نشد.");
+
+        const customer = await response.json();
+
+        document.getElementById("customerName").textContent = customer.name;
+        document.getElementById("customerPhone").textContent = customer.phone;
+        document.getElementById("customerAddress").textContent = customer.address;
+        document.getElementById("customerBalance").textContent = customer.balance.toLocaleString();
+
+        let profileImg = document.getElementById("profileImg");
+        profileImg.src = customer.img ? `http://localhost:5000/uploads/${customer.img}` : "assets/user.png";
+
+    } catch (error) {
+        console.error("❌ Error loading customer:", error);
+    }
+});
+
+// Go Back Function
+function goBack() {
+    window.history.back();
+}
+
+// Confirm Delete Function
+function confirmDelete() {
+    if (confirm("⚠️ آیا مطمئن هستید که می‌خواهید این مشتری را حذف کنید؟")) {
+        deleteCustomer();
+    }
+}
+
+// Delete Customer Function
+async function deleteCustomer() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const customerId = urlParams.get("id");
+
+    try {
+        const response = await fetch(`http://localhost:5000/api/customers/${customerId}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) throw new Error("❌ حذف مشتری انجام نشد.");
+
+        alert("✅ مشتری با موفقیت حذف شد!");
+        window.location.href = "index.html";
+
+    } catch (error) {
+        console.error("Error deleting customer:", error);
+    }
+}
+
 
 // ✅ Prevent modals from being open when page is refreshed
 document.addEventListener("DOMContentLoaded", () => {

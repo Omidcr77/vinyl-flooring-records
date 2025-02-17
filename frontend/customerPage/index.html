@@ -29,7 +29,6 @@
             <div class="actions">
                 <input type="text" id="searchInput" placeholder="🔍 جستجو مشتری..." onkeyup="searchCustomer()">
                 <button class="add-btn" onclick="openModal('addCustomerModal')">➕ افزودن مشتری</button>
-                <button class="delete-btn" onclick="deleteSelectedCustomer()">🗑️ حذف مشتری</button>
                 <button class="export-btn">📤 خروجی CSV</button>
             </div>
         </header>
@@ -54,6 +53,19 @@
 
     <script src="http://localhost:5000/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
+
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('deleteModal')">&times;</span>
+        <h3>⚠️ حذف مشتری</h3>
+        <p>آیا مطمئن هستید که می‌خواهید این مشتری را حذف کنید؟</p>
+        <button class="cancel-btn" onclick="closeModal('deleteModal')">❌ لغو</button>
+        <button class="delete-confirm-btn" onclick="deleteCustomer()">✅ حذف</button>
+    </div>
+</div>
+
 
     <!-- Add Customer Modal -->
     <div id="addCustomerModal" class="modal">

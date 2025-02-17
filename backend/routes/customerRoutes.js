@@ -79,43 +79,93 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-// ✅ Add a vinyl purchase to a customer
-router.post("/:id/vinyls", async (req, res) => {
-    try {
-        const { name, type, color, length, width, entryDate } = req.body;
-        const customer = await Customer.findById(req.params.id);
-        if (!customer) return res.status(404).json({ message: "Customer not found" });
-
-        customer.vinyls.push({ name, type, color, length, width, entryDate });
-        await customer.save();
-
-        // Emit update event
-        req.app.get("io").emit("customerUpdated", customer);
-
-        res.status(200).json(customer);
-    } catch (err) {
-        res.status(400).json({ error: err.message });
-    }
-});
-
-// ✅ Add a receipt to a customer
+// ✅ Add a Receipt (Subtract from Balance)
 router.post("/:id/receipts", async (req, res) => {
     try {
         const { date, amount, details } = req.body;
         const customer = await Customer.findById(req.params.id);
+
         if (!customer) return res.status(404).json({ message: "Customer not found" });
 
+        const parsedAmount = parseFloat(amount);
+
+        console.log("💰 Before Subtracting Receipt:", customer.balance); // Debugging Log
+
+        // ✅ Subtract the amount
+        customer.balance -= parsedAmount;
+
+        console.log("💰 After Subtracting Receipt:", customer.balance); // Debugging Log
+
+        // ✅ Add receipt to the array
         customer.receipts.push({ date, amount, details });
+
+        // ✅ Save the updated customer
         await customer.save();
 
-        // Emit update event
+        req.app.get("io").emit("customerUpdated", customer); // Notify frontend
+
+        res.status(200).json(customer); // Send back updated customer data
+    } catch (err) {
+        console.error("❌ Error in subtracting receipt:", err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+
+
+
+
+
+
+// ✅ Delete a Vinyl Purchase (Reverse Balance Change)
+router.delete("/:id/vinyls", async (req, res) => {
+    try {
+        const { type, entryDate, price } = req.body;
+        const customer = await Customer.findById(req.params.id);
+        if (!customer) return res.status(404).json({ message: "Customer not found" });
+
+        customer.vinyls = customer.vinyls.filter(v => !(v.type === type && v.entryDate === entryDate));
+
+        customer.balance -= parseFloat(price); // ✅ Reverse balance change
+        await customer.save();
+
         req.app.get("io").emit("customerUpdated", customer);
+
+        res.status(200).json(customer);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ✅ Add a Purchase Record (Increase Balance)
+router.post("/:id/purchases", async (req, res) => {
+    try {
+        const { date, billNumber, totalAmount } = req.body;
+        const customer = await Customer.findById(req.params.id);
+        if (!customer) return res.status(404).json({ message: "Customer not found" });
+
+        // Ensure `purchases` field exists
+        if (!customer.purchases) {
+            customer.purchases = [];
+        }
+
+        // Add purchase history
+        customer.purchases.push({ date, billNumber, totalAmount });
+
+        // Increase customer balance
+        customer.balance += parseFloat(totalAmount);
+
+        await customer.save();
+
+        req.app.get("io").emit("customerUpdated", customer); // Notify frontend
 
         res.status(200).json(customer);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
 });
+
 // ✅ Multer storage setup
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

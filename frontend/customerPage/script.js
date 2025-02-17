@@ -4,7 +4,10 @@ const socket = io("http://localhost:5000"); // Change to your backend URL
 
 let customers = [];
 
+
 let uploadedImagePath = ""; // Store uploaded image path before customer creation
+
+
 
 
 // ✅ Listen for new customer added
@@ -32,11 +35,8 @@ socket.on("customerDeleted", (customerId) => {
 let selectedCustomerId = null;
 
 // ✅ Function to delete a customer
-async function deleteSelectedCustomer() {
-    if (!selectedCustomerId) {
-        alert("❌ لطفاً یک مشتری را انتخاب کنید.");
-        return;
-    }
+async function deleteCustomer() {
+    if (!selectedCustomerId) return;
 
     try {
         const response = await fetch(`http://localhost:5000/api/customers/${selectedCustomerId}`, {
@@ -45,17 +45,27 @@ async function deleteSelectedCustomer() {
 
         if (!response.ok) throw new Error("❌ حذف مشتری انجام نشد.");
 
-        // Emit deletion event
+        // Emit event for real-time update
         socket.emit("deleteCustomer", selectedCustomerId);
 
         selectedCustomerId = null; // Reset selection
-        loadCustomers();
+        closeModal('deleteModal');
+        loadCustomers(); // Refresh customer list
         alert("✅ مشتری با موفقیت حذف شد!");
 
     } catch (error) {
         console.error("Error deleting customer:", error);
     }
 }
+
+
+
+
+function confirmDelete(customerId) {
+    selectedCustomerId = customerId;
+    openModal('deleteModal');
+}
+
 
 // ✅ Function to update statistics
 function updateStatistics() {
@@ -150,35 +160,42 @@ async function loadCustomers() {
         customerGrid.innerHTML = "";
 
         customers.forEach(customer => {
-    let card = document.createElement("div");
-    card.className = "customer-card";
-    card.setAttribute("data-id", customer._id);
-    
-    // ✅ Ensure correct image path
-    let imageUrl = customer.img 
-        ? `http://localhost:5000/uploads/${customer.img}`
-        : "assets/user.png"; // Default avatar
+            let card = document.createElement("div");
+            card.className = "customer-card";
+            card.setAttribute("data-id", customer._id);
 
-    card.innerHTML = `
-        <img src="${imageUrl}" alt="${customer.name}" class="customer-avatar">
-       <a href="customerDetails.html?id=${customer._id}" class="customer-link">
-                            ${customer.name}
-                        </a>
-        <p><strong>📞 شماره تلفون:</strong> ${customer.phone}</p>
-        <p><strong>📍 آدرس:</strong> ${customer.address}</p>
-        <p><strong>💰 حساب:</strong> ${customer.balance.toLocaleString()} دالر</p>
-        <button class="select-btn" onclick="selectCustomer('${customer._id}')">✔️ انتخاب</button>
-    `;
+            // ✅ Ensure correct image path
+            let imageUrl = customer.img 
+                ? `http://localhost:5000/uploads/${customer.img}`
+                : "assets/user.png"; // Default avatar
 
-    customerGrid.appendChild(card);
-});
+            card.innerHTML = `
+                <div class="customer-header">
+                    <img src="${imageUrl}" alt="${customer.name}" class="customer-avatar">
+                    <div class="menu-container">
+                        <button class="menu-btn" onclick="toggleMenu(event, '${customer._id}')">⋮</button>
+                        <div class="dropdown-menu" id="menu-${customer._id}">
+                            <button onclick="confirmDelete('${customer._id}')">🗑️ حذف مشتری</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-body">
+                    <a href="customerDetails.html?id=${customer._id}" class="customer-name">${customer.name}</a>
+                    <p><strong>📞 شماره تلفون:</strong> ${customer.phone}</p>
+                    <p><strong>📍 آدرس:</strong> ${customer.address}</p>
+                    <p><strong>💰 حساب:</strong> ${customer.balance.toLocaleString()} دالر</p>
+                </div>
+            `;
 
+            customerGrid.appendChild(card);
+        });
 
         updateStatistics();
     } catch (error) {
         console.error("Error loading customers:", error);
     }
 }
+
 
 // ✅ Function to select a customer
 function selectCustomer(customerId) {
@@ -195,6 +212,27 @@ function openModal(modalId) {
         }, 10);
     }
 }
+
+function toggleMenu(event, customerId) {
+    event.stopPropagation(); // Prevent click from closing immediately
+    let menu = document.getElementById(`menu-${customerId}`);
+
+    // Close all other menus before opening the new one
+    document.querySelectorAll(".dropdown-menu").forEach(m => {
+        if (m !== menu) m.style.display = "none";
+    });
+
+    // Toggle visibility of the menu
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+// Close menu when clicking outside
+document.addEventListener("click", () => {
+    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+        menu.style.display = "none";
+    });
+});
+
 
 // ✅ Function to close a modal
 function closeModal(modalId) {

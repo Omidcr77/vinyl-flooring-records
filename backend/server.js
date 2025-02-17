@@ -29,7 +29,7 @@ app.set("io", io);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // CORS Configuration
-app.use(cors({
+app.use(cors({ 
     origin: "*",
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: ["Content-Type"],
